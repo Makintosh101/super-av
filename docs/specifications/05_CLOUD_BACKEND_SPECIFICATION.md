@@ -1,8 +1,10 @@
 # Cloud Backend Specification
 
+Related standards: `docs/standards/PRODUCT_TERMINOLOGY.md`, `docs/standards/NAMING_STANDARDS.md`, `docs/standards/ERROR_STANDARD.md`, `docs/standards/VERSIONING_POLICY.md`.
+
 ## Purpose
 
-The cloud platform manages users, companies, devices, configuration, commands, releases and audit records.
+The cloud platform manages operators, technicians, administrators, deployments, nodes, configuration, commands, releases and audit records.
 
 It is the control plane. It should not carry video or audio frames.
 
@@ -122,13 +124,13 @@ The endpoint should use device APIs.
 Keep these separate:
 
 ```text
-/api/user/*
-/api/admin/*
-/api/device/*
-/api/internal/*
+/api/v1/operator/*
+/api/v1/admin/*
+/api/v1/node/*
+/api/v1/internal/*
 ```
 
-A device credential must never be accepted as a user credential, and vice versa.
+A node credential must never be accepted as an operator or administrator credential, and vice versa.
 
 ## Device gateway connection
 
