@@ -7,10 +7,14 @@ These rules apply to every developer and coding agent working in this repository
 Before making changes, read:
 
 1. `docs/00_PLATFORM_PRINCIPLES.md`
-2. Any ADRs referenced by the task
-3. Relevant architecture and security documents
-4. Relevant API, message and configuration contracts
-5. The complete task specification
+2. `docs/standards/PRODUCT_TERMINOLOGY.md`
+3. `docs/standards/NAMING_STANDARDS.md`
+4. `docs/standards/ERROR_STANDARD.md`
+5. `docs/standards/VERSIONING_POLICY.md`
+6. Any ADRs referenced by the task
+7. Relevant architecture and security documents
+8. Relevant API, message and configuration contracts
+9. The complete task specification
 
 ## Non-negotiable rules
 
@@ -59,7 +63,7 @@ Agents may decide ordinary details consistent with existing standards, including
 - Test fixture layout
 - Refactoring within an approved boundary
 - Logging placement
-- Normal error handling that follows the error standard
+- Normal error handling that follows `docs/standards/ERROR_STANDARD.md`
 
 ## Required completion evidence
 

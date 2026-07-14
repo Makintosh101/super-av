@@ -1,5 +1,12 @@
 # API and Message Contracts
 
+## Related standards
+
+- `docs/standards/PRODUCT_TERMINOLOGY.md`
+- `docs/standards/NAMING_STANDARDS.md`
+- `docs/standards/ERROR_STANDARD.md`
+- `docs/standards/VERSIONING_POLICY.md`
+
 ## Principle
 
 The cloud API must describe business actions and device capabilities.
@@ -156,8 +163,8 @@ The endpoint publishes its available capabilities.
   "status": "degraded",
   "issues": [
     {
-      "code": "TD_HEARTBEAT_MISSED",
-      "severity": "warning",
+      "code": "TOUCHDESIGNER-8001",
+      "severity": "Warning",
       "firstObservedAt": "2026-07-14T16:44:30Z"
     }
   ]
@@ -169,27 +176,27 @@ The endpoint publishes its available capabilities.
 Suggested endpoints:
 
 ```text
-POST /api/device/v1/registrations
-GET  /api/device/v1/registrations/{registrationId}
-POST /api/device/v1/pairing-sessions
-POST /api/admin/v1/pairing-sessions/{code}/claim
-POST /api/device/v1/certificates/rotate
-GET  /api/device/v1/bootstrap
+POST /api/v1/node/registrations
+GET  /api/v1/node/registrations/{registrationId}
+POST /api/v1/pairing/sessions
+POST /api/v1/pairing/sessions/{code}/claim
+POST /api/v1/node/certificates/rotate
+GET  /api/v1/node/bootstrap
 ```
 
 ## Configuration endpoints
 
 ```text
-GET  /api/device/v1/configuration/desired
-POST /api/device/v1/configuration/report
-GET  /api/device/v1/releases/{releaseId}/manifest
+GET  /api/v1/configuration/desired
+POST /api/v1/configuration/report
+GET  /api/v1/node/releases/{releaseId}/manifest
 ```
 
 ## Command API
 
 ```text
-POST /api/user/v1/rooms/{roomId}/commands
-GET  /api/user/v1/commands/{commandId}
+POST /api/v1/rooms/{roomId}/commands
+GET  /api/v1/commands/{commandId}
 ```
 
 The API should return the command record immediately. Real-time completion should arrive over WebSocket.
@@ -199,9 +206,12 @@ The API should return the command record immediately. Real-time completion shoul
 ```json
 {
   "error": {
-    "code": "DEVICE_CAPABILITY_UNAVAILABLE",
-    "message": "The assigned device does not expose the required capability.",
+    "code": "NODE-1001",
+    "message": "The assigned node does not expose the required capability.",
+    "severity": "Error",
+    "category": "Node",
     "correlationId": "corr_01K...",
+    "timestamp": "2026-07-14T16:45:30Z",
     "details": {
       "capability": "audio.microphones.setMuted"
     }
