@@ -19,6 +19,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0001 — Establish Phase 1 repository structure
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-003, ADR-026, ADR-030, ADR-031  
 **Dependencies:** None
 
@@ -31,6 +33,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0002 — Define task completion checklist
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-003, ADR-030, ADR-031  
 **Dependencies:** None
 
@@ -42,8 +46,10 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0003 — Add initial automated documentation checks
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-003, ADR-030, ADR-031  
-**Dependencies:** P1-BE-0001
+**Dependencies:** P1-BE-0001, P1-BE-0002
 
 **Acceptance criteria:**
 

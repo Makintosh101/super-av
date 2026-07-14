@@ -1,2 +1,0 @@
--- Empty baseline migration for TASK-001.
--- Future schema changes must be added as ordered migrations.
