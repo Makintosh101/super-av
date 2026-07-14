@@ -18,6 +18,8 @@ Before making changes, read:
 
 ## Non-negotiable rules
 
+When in doubt, stop and ask; never invent architecture, product behaviour, security rules or business logic to complete a task.
+
 1. **Do not create speculative fallback chains.**
    Fix the approved implementation. An alternative path is allowed only when it is a deliberately designed operating mode with a documented trigger, security model and test plan.
 
