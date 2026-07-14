@@ -1,0 +1,21 @@
+{
+  "name": "super-av",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "npm@11.4.2",
+  "workspaces": [
+    "packages/*",
+    "cloud/platform-api",
+    "cloud/device-gateway",
+    "endpoint/agent-service"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "node --test packages/contract-validation/test/*.test.mjs",
+    "lint": "npm run build",
+    "validate:contracts": "node packages/contract-validation/test/contracts.test.mjs",
+    "db:create": "node scripts/create-dev-db.mjs",
+    "check": "npm run build && npm test && npm run validate:contracts && npm run db:create"
+  }
+}
