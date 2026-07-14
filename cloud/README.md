@@ -1,10 +1,27 @@
 # Cloud
 
-Platform API, Device Gateway and background workers belong here.
+## Ownership
 
-## Projects
+Cloud-owned Phase 1 implementation files belong here when a scoped task approves them.
 
-- `platform-api` contains the Phase 1 Platform API TypeScript project shell.
-- `device-gateway` contains the Phase 1 Device Gateway TypeScript project shell.
+## Phase 1 status
 
-These shells intentionally expose only scaffold status functions until approved product features are implemented.
+This directory is intentionally a placeholder for Epic 1. It does not define or implement services, public APIs, workers, authentication methods, database entities or runtime behaviour.
+
+## Build commands
+
+No cloud build command exists yet. Future tasks must add build commands with the implementation they authorize.
+
+## Test commands
+
+No cloud-specific test command exists yet. Repository documentation checks run from the root with:
+
+```sh
+npm run check:docs
+```
+
+## Related specifications
+
+- [Phase 1 Build Plan](../docs/10_PHASE_1_BUILD_PLAN.md)
+- [Cloud Backend Specification](../docs/specifications/05_CLOUD_BACKEND_SPECIFICATION.md)
+- [API and Message Contracts](../docs/specifications/06_API_AND_MESSAGE_CONTRACTS.md)

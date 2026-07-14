@@ -30,13 +30,16 @@ The same command remains available through the local offline UI
 
 ## Project skeleton
 
-The repository is an npm workspace with npm workspace service shells and shared packages:
+Epic 1 establishes the repository and delivery-control baseline only. The approved Phase 1 top-level implementation areas are:
 
-- `cloud/platform-api` — Platform API project shell.
-- `cloud/device-gateway` — Device Gateway project shell.
-- `endpoint/agent-service` — Node Agent project shell.
-- `packages/contract-validation` — shared JSON Schema validation package.
-- `database/migrations` — ordered SQL migrations, starting with an empty baseline.
+- `cloud` — future cloud implementation placeholder.
+- `endpoint` — future endpoint implementation placeholder.
+- `contracts` — future contract placeholder.
+- `touchdesigner` — future TouchDesigner project placeholder.
+- `tests` — future integration, resilience and protocol test placeholder.
+- `deployment` — future deployment and release placeholder.
+
+These placeholders do not implement runtime behaviour, services, public APIs, database entities, adapter contracts or infrastructure resources.
 
 ## Local development
 
@@ -52,16 +55,16 @@ Run the full clean-checkout validation command:
 npm run check
 ```
 
-This command runs syntax checks for all workspace projects, runs tests, validates contract schemas and creates a local development SQLite database at `.local/development.sqlite` from ordered migrations.
+The current Epic 1 check validates required task metadata and relative Markdown links.
 
 ## Individual commands
 
 ```sh
-npm run build
+npm run check:docs
 npm test
-npm run validate:contracts
-npm run db:create
 ```
+
+Documentation validation also runs in CI through [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## Start here
 
