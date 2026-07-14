@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Node Capability Manifest",
+  "type": "object",
+  "required": [
+    "deviceId",
+    "agentVersion",
+    "adapters"
+  ],
+  "properties": {
+    "deviceId": {
+      "type": "string"
+    },
+    "agentVersion": {
+      "type": "string"
+    },
+    "adapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "adapterType",
+          "adapterVersion",
+          "capabilities"
+        ],
+        "properties": {
+          "adapterType": {
+            "type": "string"
+          },
+          "adapterVersion": {
+            "type": "string"
+          },
+          "capabilities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

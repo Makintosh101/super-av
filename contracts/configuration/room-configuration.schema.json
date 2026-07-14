@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Room Configuration",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "roomId",
+    "revision",
+    "startupPreset"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "roomId": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "startupPreset": {
+      "type": "string"
+    },
+    "adapters": {
+      "type": "array"
+    },
+    "presets": {
+      "type": "array"
+    },
+    "permissions": {
+      "type": "object"
+    },
+    "assets": {
+      "type": "array"
+    }
+  }
+}
