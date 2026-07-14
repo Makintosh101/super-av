@@ -28,6 +28,41 @@ The node confirms reported state
 The same command remains available through the local offline UI
 ```
 
+## Project skeleton
+
+The repository is an npm workspace with npm workspace service shells and shared packages:
+
+- `cloud/platform-api` — Platform API project shell.
+- `cloud/device-gateway` — Device Gateway project shell.
+- `endpoint/agent-service` — Node Agent project shell.
+- `packages/contract-validation` — shared JSON Schema validation package.
+- `database/migrations` — ordered SQL migrations, starting with an empty baseline.
+
+## Local development
+
+Install dependencies once:
+
+```sh
+npm ci
+```
+
+Run the full clean-checkout validation command:
+
+```sh
+npm run check
+```
+
+This command runs syntax checks for all workspace projects, runs tests, validates contract schemas and creates a local development SQLite database at `.local/development.sqlite` from ordered migrations.
+
+## Individual commands
+
+```sh
+npm run build
+npm test
+npm run validate:contracts
+npm run db:create
+```
+
 ## Start here
 
 1. Read [`AGENTS.md`](AGENTS.md).
