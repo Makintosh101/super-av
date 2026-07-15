@@ -147,6 +147,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0201 — Add initial database migration framework
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-003, ADR-028, ADR-029  
 **Dependencies:** P1-BE-0001
 
@@ -158,6 +160,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - No application feature depends on tables outside migrations.
 
 ### P1-BE-0202 — Add identity, company, site and room migrations
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-003, ADR-011, ADR-028  
 **Dependencies:** P1-BE-0201
@@ -171,6 +175,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0203 — Add device lifecycle migrations
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-003, ADR-011  
 **Dependencies:** P1-BE-0202
 
@@ -182,6 +188,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Cloud stores certificate metadata only, not private keys.
 
 ### P1-BE-0204 — Add configuration, command, state and event migrations
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-003, ADR-012, ADR-017, ADR-019, ADR-020, ADR-021, ADR-022  
 **Dependencies:** P1-BE-0203, P1-BE-0105
@@ -195,6 +203,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Event and telemetry retention fields support the documented retention model.
 
 ### P1-BE-0205 — Add release and package metadata migrations
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-003, ADR-010, ADR-024, ADR-029  
 **Dependencies:** P1-BE-0203

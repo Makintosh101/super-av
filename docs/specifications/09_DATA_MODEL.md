@@ -314,3 +314,15 @@ created_at
 - Command idempotency keys are unique within an appropriate scope.
 - A device can have only one active ownership record.
 - A device should have only one active primary room assignment unless multi-room behaviour is explicitly supported.
+
+## Phase 1 migration baseline
+
+The Epic 3 migration baseline is implemented in `cloud/database/migrations` and is intentionally additive.
+
+- `0001_migration_framework.sql` creates `schema_migrations` and `seed_runs` for migration and seed tracking.
+- `0002_identity_company_site_room.sql` creates app user, company, company user, site and room foundation tables.
+- `0003_device_lifecycle.sql` creates device lifecycle, credential, registration, pairing, adapter and room assignment tables. Pairing sessions store `code_hash`; raw pairing codes are not persisted.
+- `0004_configuration_command_state_event.sql` creates room configuration, configuration deployment, preset, desired state, command, reported state, device event and audit event tables.
+- `0005_release_package_metadata.sql` creates release, package and room release assignment metadata including version, channel, compatibility and package-integrity fields.
+
+The initial Phase 1 seed data lives in `cloud/database/seeds/001_blue_elephant_phase1.sql` and is idempotent through `ON CONFLICT` statements.
