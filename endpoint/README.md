@@ -6,7 +6,7 @@ Endpoint agent, commissioning, adapter SDK, adapter and installer implementation
 
 ## Phase 1 status
 
-P1-EPIC-08 extends the BE Endpoint Node Agent foundation with endpoint command, configuration, state, event and offline-control behaviour. The implementation remains intentionally small and covers the approved Phase 1 endpoint execution scope:
+P1-EPIC-09 extends the BE Endpoint Node Agent foundation with the internal adapter host, System Health adapter, deterministic simulator and TouchDesigner adapter runtime boundary. P1-EPIC-08 previously added endpoint command, configuration, state, event and offline-control behaviour. The implementation remains intentionally small and covers the approved Phase 1 endpoint execution scope:
 
 - Windows service skeleton scripts for installing and removing the service.
 - Structured startup and shutdown logging.
@@ -22,10 +22,15 @@ P1-EPIC-08 extends the BE Endpoint Node Agent foundation with endpoint command, 
 - Reported-state publisher with increasing revisions, offline queueing and stale remote revision protection.
 - Local audit/event queue with UTC ordering, visible capacity/disk diagnostics and failed-upload retention.
 - Offline local User/Technician control boundary that routes cached room actions through the same command dispatcher and marks Technician programming as cloud-review draft work.
+- Internal adapter contract supporting manifests, lifecycle, configuration validation, command execution, reported state and health for Phase 1 adapters only.
+- Adapter host that starts/stops configured adapters, preserves degraded startup diagnostics and publishes adapter manifests.
+- System Health adapter reporting CPU, memory, disk, GPU availability, agent version, adapter version and recent errors, including low-disk alerts.
+- Simulated TouchDesigner adapter implementing all Phase 1 logical commands with deterministic state changes for integration tests.
+- TouchDesigner adapter with configured project launch, localhost-only bridge validation, protocol/message-size checks, command mapping, heartbeat detection and documented bounded restart policy.
 
 ## Scope boundaries
 
-P1-EPIC-08 does not implement adapter hosting, TouchDesigner process management, update installation, new public cloud APIs, ownership changes, certificate changes, tenant membership changes or cloud security changes. Adapter hosting and TouchDesigner behaviour remain assigned to P1-EPIC-09.
+P1-EPIC-09 does not implement packaging, installer updates, package signature verification, web application screens, new public cloud APIs, ownership changes, certificate changes, tenant membership changes or cloud security changes. Packaging and deployment remain assigned to later authorised Epics.
 
 ## Windows service commands
 
@@ -74,3 +79,11 @@ npm run check
 - [Endpoint Agent Specification](../docs/specifications/04_ENDPOINT_AGENT_SPECIFICATION.md)
 - [API and Message Contracts](../docs/specifications/06_API_AND_MESSAGE_CONTRACTS.md)
 - [Security and Trust Model](../docs/standards/07_SECURITY_AND_TRUST_MODEL.md)
+
+## Adapter host and Phase 1 adapters
+
+The adapter host is internal to the endpoint agent. It is not a public plugin marketplace and accepts only the Phase 1 adapter types documented by the repository decisions: `systemHealth` and `touchdesigner`.
+
+TouchDesigner licensing is a deployment prerequisite. The runtime requires an executable path, assigned project path and expected project version from active configuration/release metadata; it does not hide licensing failure behind alternate launch behaviour. The localhost bridge accepts only `localhost`, `127.0.0.1` or `::1`, validates the expected protocol version and rejects oversized messages.
+
+The TouchDesigner restart policy is an explicit recovery mode: when the project heartbeat exceeds the configured timeout, the adapter performs a bounded restart inside the configured restart window. If the restart limit is reached, the adapter reports degraded health instead of entering an endless restart loop.

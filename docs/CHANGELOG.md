@@ -45,3 +45,7 @@ Completed P1-EPIC-08 local endpoint execution scope. Added command dispatch and 
 - Added cloud configuration service support for draft validation, immutable publication, desired configuration fetch and minimal media asset metadata.
 - Added unit coverage for validation failures, publication supersession, desired configuration authorization and media metadata URL rejection.
 - Added desired configuration contract details and Decision Requests blocking configuration report and release manifest implementation until ADR-009 and ADR-010 are confirmed.
+
+## 2026-07-15 — P1-EPIC-09 Adapter Host, Simulator and TouchDesigner Adapter
+
+Completed P1-EPIC-09 endpoint adapter scope. Added the internal adapter contract, adapter host lifecycle, System Health adapter, deterministic simulated TouchDesigner adapter, TouchDesigner process/localhost bridge boundary, logical command handlers, heartbeat detection and bounded restart policy. Added unit coverage for adapter contract enforcement, degraded startup diagnostics, health reporting, simulator state changes, localhost/protocol/message validation, TouchDesigner command mapping and restart-limit degradation. No public API, cloud contract, database migration or infrastructure change was required.

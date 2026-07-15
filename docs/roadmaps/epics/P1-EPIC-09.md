@@ -67,3 +67,38 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## P1-EPIC-09 completion evidence
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-0801 — Define internal adapter contract in code.
+- P1-BE-0802 — Implement adapter host lifecycle.
+- P1-BE-0803 — Implement System Health adapter.
+- P1-BE-0804 — Implement simulated node adapter.
+- P1-BE-0805 — Implement TouchDesigner process launch.
+- P1-BE-0806 — Implement TouchDesigner localhost WebSocket bridge.
+- P1-BE-0807 — Implement TouchDesigner command handlers.
+- P1-BE-0808 — Implement TouchDesigner heartbeat and restart policy.
+
+Changed behaviour: the endpoint agent now has an internal Phase 1 adapter boundary, can host the System Health and TouchDesigner adapter types, exposes deterministic simulator behaviour for tests, launches configured TouchDesigner projects, validates localhost bridge traffic, maps logical commands locally and reports bounded heartbeat-restart degradation.
+
+Files changed: `endpoint/agent/adapters/adapter-contract.mjs`, `endpoint/agent/adapters/adapter-host.mjs`, `endpoint/agent/adapters/system-health-adapter.mjs`, `endpoint/agent/adapters/simulated-node-adapter.mjs`, `endpoint/agent/adapters/touchdesigner-adapter.mjs`, `endpoint/agent/errors.mjs`, `tests/adapter-host.test.mjs`, `endpoint/README.md`, `docs/roadmaps/epics/P1-EPIC-09.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+
+Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation.
+
+Migrations: none; no database schema change was required.
+
+Contracts: none; existing logical command and endpoint message contracts were reused without public API changes.
+
+Documentation: endpoint README, P1-EPIC-09 record, Engineering Backlog and changelog were updated.
+
+Known limitations: no packaged TouchDesigner binary, installer workflow, package signature verification, web UI or hardware integration is introduced by this Epic; those remain in later authorised scope.
+
+Recovery/rollback: revert the P1-EPIC-09 commit to remove adapter modules and tests; no database rollback is required.
+
+Referenced ADRs: ADR-002, ADR-008, ADR-015, ADR-016, ADR-017, ADR-021, ADR-022, ADR-024, ADR-025, ADR-026, ADR-027 and ADR-032.
+
+Review Gate: reached; do not begin P1-EPIC-10 until P1-EPIC-09 Review Gate approval is complete.
