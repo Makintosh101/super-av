@@ -65,3 +65,25 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+## Completion record
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-0601 — Windows service skeleton implemented with install/remove scripts and structured startup/shutdown logs.
+- P1-BE-0602 — Local SQLite migration foundation added with explicit schema-version compatibility validation.
+- P1-BE-0603 — Device identity generation added with persistent metadata, private-key reference storage and reboot-stable identity loading.
+- P1-BE-0604 — Provisioning client added for unclaimed registration and status polling with explicit failure handling.
+- P1-BE-0605 — Pairing-code display source added with expiry/claimed-session protection.
+- P1-BE-0606 — Cloud connection manager added for `device.hello`, `server.welcome` and heartbeat flow through a secure transport abstraction.
+- P1-BE-0607 — Local diagnostics and commissioning API added with localhost binding, bearer-token protection and constrained diagnostic export trigger.
+
+Completion evidence:
+
+- Tests: `npm run check`, `node --test tests/endpoint-agent.test.mjs`, `git diff --check`.
+- Migrations: endpoint local ordered migration `endpoint/migrations/0001_endpoint_agent_foundation.sql`; no cloud database migration required.
+- Contracts: existing provisioning and WebSocket contracts reused; no public contract version change required.
+- Infrastructure: no infrastructure changes.
+- Known limitations: Windows service scripts are scaffolding for the Node-based foundation; adapter hosting, command execution, configuration activation, update installation, and TouchDesigner process control remain out of scope for this Epic.
+- Rollback: remove the endpoint foundation files and service scripts; no production database rollback is required.
