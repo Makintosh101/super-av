@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Super AV Phase 1 Node Provisioning and Device API
+  version: 1.0.0
+paths:
+  /api/v1/node/registrations:
+    post:
+      parameters:
+        - name: X-Correlation-Id
+          in: header
+          required: true
+          schema: { type: string }
+      responses:
+        '202': { description: Registration accepted }
+  /api/v1/node/bootstrap:
+    get:
+      parameters:
+        - name: X-Correlation-Id
+          in: header
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Bootstrap document }

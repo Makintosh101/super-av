@@ -6,8 +6,9 @@
   "packageManager": "npm@11.4.2",
   "scripts": {
     "check:docs": "node scripts/check-docs.mjs",
-    "test": "npm run check:docs && npm run check:db",
-    "check": "npm run check:docs && npm run check:db",
-    "check:db": "node cloud/database/scripts/validate-migrations.mjs"
+    "test": "npm run check:docs && npm run check:contracts && npm run check:db",
+    "check": "npm run check:docs && npm run check:contracts && npm run check:db",
+    "check:db": "node cloud/database/scripts/validate-migrations.mjs",
+    "check:contracts": "node scripts/check-contracts.mjs"
   }
 }

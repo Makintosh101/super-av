@@ -6,7 +6,7 @@ Integration, resilience, protocol and repository validation tests belong here or
 
 ## Phase 1 status
 
-Epic 1 adds documentation validation only. It does not add product runtime tests, contract tests, database tests or infrastructure tests.
+Epic 1 adds documentation validation. Epic 2 adds contract validation. Epic 3 adds database migration validation. These checks do not implement product runtime behaviour.
 
 ## Build commands
 
@@ -14,13 +14,25 @@ No test build command exists yet.
 
 ## Test commands
 
-Run the Epic 1 documentation validation from the repository root with:
+Run documentation validation from the repository root with:
 
 ```sh
 npm run check:docs
 ```
 
-The root aggregate check currently runs the same validation:
+Run contract validation with:
+
+```sh
+npm run check:contracts
+```
+
+Run database migration validation with:
+
+```sh
+npm run check:db
+```
+
+Run the root aggregate check with:
 
 ```sh
 npm run check

@@ -1,0 +1,61 @@
+{
+  "catalogueVersion": "1.0",
+  "errors": [
+    {
+      "code": "PROVISIONING-1001",
+      "category": "Provisioning",
+      "severity": "Error",
+      "userSafeMessage": "The node registration could not be accepted.",
+      "diagnosticGuidance": "Check registration status, correlation ID and node bootstrap version."
+    },
+    {
+      "code": "PAIRING-2001",
+      "category": "Pairing",
+      "severity": "Error",
+      "userSafeMessage": "The pairing code is invalid or expired.",
+      "diagnosticGuidance": "Verify the code hash, expiry timestamp and attempt count."
+    },
+    {
+      "code": "AUTH-3001",
+      "category": "Authentication",
+      "severity": "Critical",
+      "userSafeMessage": "The node credential was not accepted.",
+      "diagnosticGuidance": "Inspect certificate status, revocation state and gateway authentication logs."
+    },
+    {
+      "code": "COMMAND-4001",
+      "category": "Command",
+      "severity": "Error",
+      "userSafeMessage": "The command expired before it could be applied.",
+      "diagnosticGuidance": "Compare issuedAt, expiresAt and the node UTC clock."
+    },
+    {
+      "code": "CAPABILITY-5001",
+      "category": "Capability",
+      "severity": "Error",
+      "userSafeMessage": "The assigned node does not expose the required capability.",
+      "diagnosticGuidance": "Compare the requested action with the latest capability manifest."
+    },
+    {
+      "code": "CONFIGURATION-6001",
+      "category": "Configuration",
+      "severity": "Error",
+      "userSafeMessage": "The configuration could not be activated.",
+      "diagnosticGuidance": "Validate the published configuration schema and adapter validation result."
+    },
+    {
+      "code": "ADAPTER-8001",
+      "category": "Adapter",
+      "severity": "Warning",
+      "userSafeMessage": "An adapter reported degraded health.",
+      "diagnosticGuidance": "Review adapter heartbeat, process status and recent adapter errors."
+    },
+    {
+      "code": "PACKAGE-9001",
+      "category": "Package",
+      "severity": "Error",
+      "userSafeMessage": "The package failed validation.",
+      "diagnosticGuidance": "Check package hash, signature and release compatibility metadata."
+    }
+  ]
+}

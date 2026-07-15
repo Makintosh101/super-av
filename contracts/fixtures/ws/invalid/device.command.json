@@ -1,0 +1,16 @@
+{
+  "type": "device.command",
+  "messageId": "not-stable",
+  "command": {
+    "commandId": "cmd_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+    "deviceId": "dev_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+    "action": "/project1/base2/switch1/index",
+    "parameters": {
+      "presetId": "presentation"
+    },
+    "issuedAt": "2026-07-14T16:45:00Z",
+    "expiresAt": "2026-07-14T16:45:30Z",
+    "configurationRevision": 43,
+    "idempotencyKey": "session-123-presentation-8"
+  }
+}

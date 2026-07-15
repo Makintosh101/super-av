@@ -61,6 +61,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0101 — Create WebSocket message schemas
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-002, ADR-008, ADR-012, ADR-013, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0001
 
@@ -74,6 +76,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0102 — Create REST contract stubs for provisioning and device APIs
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-008, ADR-011, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0101
 
@@ -85,6 +89,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Contracts include acceptance examples for unclaimed, claimed, suspended and retired devices.
 
 ### P1-BE-0103 — Create command API contract
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-008, ADR-012, ADR-013, ADR-014, ADR-015, ADR-017, ADR-026  
 **Dependencies:** P1-BE-0101, P1-BE-0102
@@ -98,6 +104,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0104 — Create capability manifest schema
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-008, ADR-015, ADR-016, ADR-032  
 **Dependencies:** P1-BE-0101
 
@@ -110,6 +118,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0105 — Create room configuration and preset schemas
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-008, ADR-012, ADR-017, ADR-020, ADR-026  
 **Dependencies:** P1-BE-0104
 
@@ -121,6 +131,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Include fixtures for the default holding state and presentation preset.
 
 ### P1-BE-0106 — Create canonical error-code catalogue
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-002, ADR-021, ADR-023, ADR-027  
 **Dependencies:** P1-BE-0102, P1-BE-0103

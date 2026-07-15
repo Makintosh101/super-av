@@ -12,12 +12,12 @@ This Epic groups closely related Phase 1 management tasks from the existing engi
 
 ## Tasks
 
-- [P1-BE-0101](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0101-create-websocket-message-schemas) — Create WebSocket message schemas
-- [P1-BE-0102](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0102-create-rest-contract-stubs-for-provisioning-and-device-apis) — Create REST contract stubs for provisioning and device APIs
-- [P1-BE-0103](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0103-create-command-api-contract) — Create command API contract
-- [P1-BE-0104](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0104-create-capability-manifest-schema) — Create capability manifest schema
-- [P1-BE-0105](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0105-create-room-configuration-and-preset-schemas) — Create room configuration and preset schemas
-- [P1-BE-0106](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0106-create-canonical-error-code-catalogue) — Create canonical error-code catalogue
+- [x] [P1-BE-0101](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0101-create-websocket-message-schemas) — Create WebSocket message schemas
+- [x] [P1-BE-0102](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0102-create-rest-contract-stubs-for-provisioning-and-device-apis) — Create REST contract stubs for provisioning and device APIs
+- [x] [P1-BE-0103](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0103-create-command-api-contract) — Create command API contract
+- [x] [P1-BE-0104](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0104-create-capability-manifest-schema) — Create capability manifest schema
+- [x] [P1-BE-0105](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0105-create-room-configuration-and-preset-schemas) — Create room configuration and preset schemas
+- [x] [P1-BE-0106](../../tasks/PHASE_1_ENGINEERING_BACKLOG.md#p1-be-0106-create-canonical-error-code-catalogue) — Create canonical error-code catalogue
 
 ## Dependencies
 
@@ -61,3 +61,18 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+
+## Implementation status
+
+- Status: Complete.
+- Completed tasks: P1-BE-0101, P1-BE-0102, P1-BE-0103, P1-BE-0104, P1-BE-0105 and P1-BE-0106.
+- Review Gate: reached; do not proceed into Epic 3 until review completes.
+
+## Epic Completion Report
+
+Epic 2 adds the source-controlled Phase 1 contract baseline: WebSocket schemas and fixtures, OpenAPI stubs, command contracts, capability manifest schema, room configuration and preset schemas, and the canonical error-code catalogue. Contract validation is wired into the repository aggregate check.
+
+## Architecture Guardian Review
+
+No undocumented architecture has been introduced. Contracts remain consistent with approved Phase 1 logical capabilities, and no runtime services, database migrations or adapter behaviour were introduced by Epic 2.
