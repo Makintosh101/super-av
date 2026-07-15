@@ -56,3 +56,50 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## Implementation status
+
+- Status: Complete.
+- Completed tasks: P1-BE-0301, P1-BE-0302, P1-BE-0303, P1-BE-0304, P1-BE-0305 and P1-BE-0306.
+- Review Gate: ready for Product Owner review after remote repository verification.
+
+## Epic Completion Report
+
+### Executive summary
+
+Epic 4 adds the Phase 1 provisioning implementation for unclaimed device registration, registration status polling, pairing session creation, pairing claim, certificate metadata issuance and room assignment.
+
+### Deliverables
+
+- Framework-neutral cloud provisioning service functions for the approved endpoint behaviour.
+- OpenAPI response contracts for registration, status polling, pairing, claim and room assignment.
+- Additive migration `0006` for provisioning metadata alignment with the implemented contract.
+- Unit tests covering duplicate registration, limited pre-claim visibility, hashed one-time pairing codes, expiry, role checks, certificate metadata-only storage and ownership-validated room assignment.
+
+### Migration summary
+
+Migration `0006_epic04_provisioning_metadata.sql` adds public-key fingerprint, installation, fingerprint, commissioning, QR token, claim actor and revocation-reason metadata. It also renames certificate fingerprint terminology to certificate thumbprint. No manual database changes are required or permitted.
+
+### Contract updates
+
+`contracts/openapi/node-api.yaml` now documents concrete response bodies for the Epic 4 provisioning endpoints and the Phase 1 room assignment endpoint.
+
+### Security review
+
+Pairing codes are hashed in stored session records and exposed only in the creation response. Claim enforces Blue Elephant company admin/technician access, expiry and one-time use. Certificate records contain thumbprint and lifecycle metadata only; endpoint private keys are rejected. Registration and polling keep pre-claim access limited.
+
+### Known limitations
+
+No deployed HTTP server or infrastructure is introduced in this epic. The implementation is transport-neutral product logic to be wired into the approved cloud runtime by a later scoped task.
+
+### Recovery / rollback notes
+
+For a failed pre-production deployment, rebuild the empty database from the ordered migration chain and revert the Epic 4 code, contract, migration, test and documentation changes together.
+
+### Decision Requests
+
+None.
+
+### Referenced ADRs
+
+ADR-001, ADR-002, ADR-008, ADR-011, ADR-019, ADR-026 and ADR-028.

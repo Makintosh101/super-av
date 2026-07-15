@@ -219,6 +219,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0301 — Implement unclaimed device registration endpoint
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0102, P1-BE-0203
 
@@ -232,6 +234,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0302 — Implement registration status polling endpoint
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-001, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0301
 
@@ -242,6 +246,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Response includes claim result and assigned room summary only after authorisation.
 
 ### P1-BE-0303 — Implement pairing session creation endpoint
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0301
@@ -254,6 +260,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Response includes a code and signed one-time QR token; neither contains permanent credentials.
 
 ### P1-BE-0304 — Implement pairing claim endpoint
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-002, ADR-011, ADR-019, ADR-026, ADR-028  
 **Dependencies:** P1-BE-0303, P1-BE-0202
@@ -268,6 +276,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0305 — Implement device certificate issuance record
 
+**Status:** Complete
+
 **Relevant ADRs:** ADR-002, ADR-003, ADR-011  
 **Dependencies:** P1-BE-0304, P1-BE-0203
 
@@ -279,6 +289,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Revoked or suspended devices cannot receive valid connection tokens.
 
 ### P1-BE-0306 — Implement room assignment endpoint
+
+**Status:** Complete
 
 **Relevant ADRs:** ADR-008, ADR-011, ADR-026, ADR-028  
 **Dependencies:** P1-BE-0304, P1-BE-0202
