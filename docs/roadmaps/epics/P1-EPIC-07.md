@@ -63,3 +63,31 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## Implementation status
+
+Status: Paused pending Decision Requests.
+
+Completed tasks:
+
+- P1-BE-0501 — Implement configuration draft validation.
+- P1-BE-0502 — Implement configuration publication.
+- P1-BE-0503 — Implement desired configuration endpoint.
+- P1-BE-0505 — Implement minimal media asset metadata.
+
+Blocked tasks:
+
+- P1-BE-0504 — blocked by `docs/tasks/DR-P1-EPIC-07-ADR-009-CONFIGURATION-REPORTING.md` because ADR-009 is In Review.
+- P1-BE-0506 — blocked by `docs/tasks/DR-P1-EPIC-07-ADR-010-RELEASE-MANIFEST.md` because ADR-010 is Proposed.
+
+Review Gate: not reached. Do not begin P1-EPIC-08 until the Decision Requests are resolved, blocked tasks are implemented and the Epic reaches Review Gate approval.
+
+### Partial completion evidence
+
+- Behaviour: cloud-side draft validation, configuration publication, desired configuration fetch and media asset metadata are implemented for the repository-local service harness.
+- Tests: `npm test`; `git diff --check`.
+- Migrations: none added; existing Phase 1 database migrations already cover configuration and package metadata structures.
+- Contracts: desired configuration response added to `contracts/openapi/node-api.yaml`.
+- Documentation: cloud README, backlog, changelog and Decision Requests updated.
+- Known limitations: configuration report endpoint and release manifest API are intentionally not implemented pending material decisions.
+- Rollback: revert the P1-EPIC-07 commit.
