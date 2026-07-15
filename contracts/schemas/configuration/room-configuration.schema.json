@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/configuration/room-configuration.schema.json",
+  "title": "Phase 1 Room Configuration",
+  "type": "object",
+  "required": ["configurationId", "roomId", "revision", "schemaVersion", "desiredState", "adapters", "presets", "assets"],
+  "properties": {
+    "configurationId": { "type": "string", "pattern": "^cfg_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "roomId": { "type": "string", "pattern": "^room_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "revision": { "type": "integer", "minimum": 1 },
+    "schemaVersion": { "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/contractVersion" },
+    "desiredState": {
+      "type": "object",
+      "required": ["startupPresetId", "holdingEnabled"],
+      "properties": { "startupPresetId": { "type": "string" }, "holdingEnabled": { "type": "boolean" } },
+      "additionalProperties": false
+    },
+    "adapters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["adapterType", "configuration"],
+        "properties": {
+          "adapterType": { "type": "string", "enum": ["touchdesigner", "system_health"] },
+          "configuration": { "type": "object", "propertyNames": { "not": { "pattern": "^/|project\\d+|base\\d+|switch\\d+|/project" } } }
+        },
+        "additionalProperties": false
+      }
+    },
+    "presets": {
+      "type": "array",
+      "items": { "$ref": "https://contracts.super-av.local/schemas/configuration/preset.schema.json" }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["assetId", "kind"],
+        "properties": { "assetId": { "type": "string", "pattern": "^asset_[A-Za-z0-9_-]+$" }, "kind": { "type": "string", "enum": ["image", "video", "audio"] } },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

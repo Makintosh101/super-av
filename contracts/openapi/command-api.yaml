@@ -1,0 +1,79 @@
+openapi: 3.1.0
+info:
+  title: Super AV Phase 1 Operator Command API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com
+security:
+  - userSession: []
+paths:
+  /api/v1/rooms/{roomId}/commands:
+    post:
+      summary: Create an authorised logical command for a room
+      parameters:
+        - name: roomId
+          in: path
+          required: true
+          schema: { type: string, pattern: '^room_[0-9A-HJKMNP-TV-Z]{26}$' }
+        - name: X-Correlation-Id
+          in: header
+          required: true
+          schema: { type: string, pattern: '^corr_[0-9A-HJKMNP-TV-Z]{26}$' }
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: { type: string, minLength: 8, maxLength: 128 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateCommandRequest' }
+      responses:
+        '202': { description: Command accepted for delivery }
+        '400': { description: Expired command or invalid parameters, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+        '409': { description: Unsupported capability or incompatible configuration revision, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+  /api/v1/commands/{commandId}:
+    get:
+      summary: Get command acknowledgement and completion status
+      parameters:
+        - name: commandId
+          in: path
+          required: true
+          schema: { type: string, pattern: '^cmd_[0-9A-HJKMNP-TV-Z]{26}$' }
+      responses:
+        '200': { description: Command status }
+components:
+  securitySchemes:
+    userSession:
+      type: http
+      scheme: bearer
+  schemas:
+    CreateCommandRequest:
+      type: object
+      required: [actorRole, action, parameters, expiresAt, requiredCapability, configurationRevision]
+      properties:
+        actorRole: { type: string, enum: [Admin, Technician, User] }
+        action:
+          type: string
+          enum: [system.getStatus, system.restartApplication, preset.activate, video.output.selectSource, holding.show, holding.hide, audio.microphones.setMuted, audio.master.setVolume]
+        parameters: { type: object }
+        expiresAt: { type: string, format: date-time, pattern: 'Z$' }
+        requiredCapability:
+          type: string
+          enum: [system.getStatus, system.restartApplication, preset.activate, video.output.selectSource, holding.show, holding.hide, audio.microphones.setMuted, audio.master.setVolume]
+        configurationRevision: { type: integer, minimum: 0 }
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message, severity, category, correlationId, timestamp]
+          properties:
+            code: { type: string, examples: [CAPABILITY-5001, COMMAND-4001] }
+            message: { type: string }
+            severity: { type: string, enum: [Info, Warning, Error, Critical] }
+            category: { type: string }
+            correlationId: { type: string }
+            timestamp: { type: string, format: date-time, pattern: 'Z$' }
+            details: { type: object }
