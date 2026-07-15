@@ -74,3 +74,75 @@ test('local API binds to localhost and requires bearer token', async () => {
   assert.equal(body.identity.deviceId, 'dev_1');
   await new Promise((resolve) => server.close(resolve));
 });
+
+import { CommandDispatcher, PHASE_1_ACTIONS } from '../endpoint/agent/command-dispatcher.mjs';
+import { JsonCommandDeduplicationStore } from '../endpoint/agent/command-deduplication-store.mjs';
+import { ConfigurationManager } from '../endpoint/agent/configuration-manager.mjs';
+import { ReportedStatePublisher, LocalEventQueue } from '../endpoint/agent/state-and-event-queues.mjs';
+import { OfflineControlBoundary } from '../endpoint/agent/offline-control.mjs';
+
+test('command dispatcher validates, acknowledges, completes, and deduplicates commands', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'endpoint-command-'));
+  const sent = [];
+  const dispatcher = new CommandDispatcher({
+    adapter: { execute: async (command) => ({ appliedAction: command.action }) },
+    deduplicationStore: new JsonCommandDeduplicationStore({ path: join(directory, 'dedupe.json') }),
+    configurationProvider: { active: () => ({ configurationRevision: 7, capabilities: PHASE_1_ACTIONS }) },
+    transport: { send: async (message) => sent.push(message) },
+    logger: { info: () => {} }
+  });
+  const command = { commandId: 'cmd_1', correlationId: 'corr_1', idempotencyKey: 'idem_1', actorRole: 'User', action: 'holding.show', requiredCapability: 'holding.show', configurationRevision: 7, expiresAt: '2999-01-01T00:00:00Z' };
+  const first = await dispatcher.dispatch(command);
+  const duplicate = await dispatcher.dispatch(command);
+  assert.equal(first.status, 'completed');
+  assert.equal(duplicate.status, 'completed');
+  assert.deepEqual(sent.map((message) => message.type), ['device.commandAcknowledged', 'device.commandCompleted']);
+  await assert.rejects(() => dispatcher.dispatch({ ...command, commandId: 'cmd_2', idempotencyKey: 'idem_2', action: '/project1/base1' }), /Unsupported/);
+});
+
+test('configuration manager validates desired configuration and preserves known-good on rejection', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'endpoint-config-'));
+  const reports = [];
+  const manager = new ConfigurationManager({ path: join(directory, 'configuration.json'), fetchDesiredConfiguration: async () => ({ schemaVersion: 'phase1.configuration.v1', configurationRevision: 3, assetIds: ['asset_1'], capabilities: ['holding.show'] }), reportConfiguration: async (report) => reports.push(report), assetExists: async () => true });
+  const active = await manager.downloadValidateAndActivate();
+  assert.equal(active.configurationRevision, 3);
+  assert.equal(reports[0].status, 'active');
+  const rejecting = new ConfigurationManager({ path: join(directory, 'bad.json'), fetchDesiredConfiguration: async () => ({ schemaVersion: 'phase1.configuration.v1', configurationRevision: 4, assetIds: [], capabilities: ['touchdesigner.operator.path'] }) });
+  await assert.rejects(() => rejecting.downloadValidateAndActivate(), /unsupported capabilities/);
+  assert.equal(rejecting.active().configurationRevision, 0);
+});
+
+test('state publisher queues offline state and refuses stale overwrite', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'endpoint-state-'));
+  let online = false;
+  const sent = [];
+  const publisher = new ReportedStatePublisher({ path: join(directory, 'state.json'), transport: { send: async (message) => { if (!online) throw new Error('offline'); sent.push(message); } } });
+  await publisher.publish({ system: { online: true }, video: { source: 'hdmi1' }, holding: { visible: false }, audio: { masterVolume: 50 } });
+  online = true;
+  await publisher.reconcile(0);
+  assert.equal(sent[0].type, 'device.stateChanged');
+  await assert.rejects(() => publisher.reconcile(99), /newer than local/);
+});
+
+test('event queue uploads in UTC order and preserves failed uploads with diagnostics', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'endpoint-events-'));
+  const sent = [];
+  const queue = new LocalEventQueue({ path: join(directory, 'events.json'), transport: { send: async (event) => { if (event.eventId === 'evt_fail') throw new Error('upload failed'); sent.push(event); } }, maxEvents: 1, diskSpaceAvailable: () => false });
+  await queue.enqueue({ eventId: 'evt_late', eventType: 'command.completed', correlationId: 'corr_1', occurredAt: '2026-07-15T00:02:00Z' });
+  await queue.enqueue({ eventId: 'evt_fail', eventType: 'health.changed', correlationId: 'corr_2', occurredAt: '2026-07-15T00:01:00Z' });
+  const result = await queue.flush();
+  assert.equal(result.remaining, 1);
+  assert.equal(sent[0].eventId, 'evt_late');
+  assert.equal(result.diagnostics.diskSpace, 'low');
+});
+
+test('offline control boundary permits cached User and Technician actions only', async () => {
+  const dispatched = [];
+  const boundary = new OfflineControlBoundary({ dispatcher: { dispatch: async (command) => { dispatched.push(command); return { status: 'completed' }; } }, cachedRoomActions: ['holding.hide'], draftStore: { save: async () => {} } });
+  await boundary.execute({ actorRole: 'User', action: 'holding.hide' });
+  assert.equal(dispatched[0].source, 'offlineLocal');
+  await assert.rejects(() => boundary.execute({ actorRole: 'Admin', action: 'holding.hide' }), /User and Technician/);
+  await assert.rejects(() => boundary.execute({ actorRole: 'Technician', action: 'certificate.rotate' }), /cloud-only/);
+  const draft = await boundary.createDraftProgramming({ actorRole: 'Technician', draft: { name: 'Preset draft' } });
+  assert.equal(draft.requiresCloudReview, true);
+});
