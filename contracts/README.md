@@ -2,22 +2,37 @@
 
 ## Ownership
 
-Machine-readable API, message, capability and configuration contracts belong here when a scoped task approves them.
+Machine-readable API, message, capability, configuration and error contracts belong here.
 
 ## Phase 1 status
 
-This directory is intentionally a placeholder for Epic 1. It does not define public APIs, WebSocket messages, schemas, adapter contracts or runtime behaviour.
+Epic 2 defines the initial Phase 1 contracts only. These files describe approved interfaces and validation fixtures; they do not implement runtime services, database entities, infrastructure or adapter behaviour.
+
+## Contents
+
+- `schemas/ws/` — JSON Schemas for device gateway WebSocket messages.
+- `schemas/capability/` — Capability manifest schema for the Phase 1 TouchDesigner and System Health adapters.
+- `schemas/configuration/` — Room configuration and preset schemas using desired state and logical actions.
+- `schemas/errors/` — Canonical error catalogue schema.
+- `fixtures/` — Valid and invalid examples used by contract validation.
+- `openapi/` — OpenAPI stubs for node provisioning/device/configuration APIs and the operator command API.
 
 ## Build commands
 
-No contract build command exists yet. Future contract tasks must add validation commands with the schemas they authorize.
+Contracts are static source files and do not require a build step.
 
 ## Test commands
 
-No contract-specific validation command exists yet. Repository documentation checks run from the root with:
+Run contract validation from the repository root with:
 
 ```sh
-npm run check:docs
+npm run check:contracts
+```
+
+Run all repository checks with:
+
+```sh
+npm run check
 ```
 
 ## Related specifications

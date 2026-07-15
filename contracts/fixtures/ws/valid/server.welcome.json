@@ -1,0 +1,8 @@
+{
+  "type": "server.welcome",
+  "messageId": "msg_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "connectionId": "conn_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "serverTime": "2026-07-14T16:45:00Z",
+  "heartbeatIntervalSeconds": 20,
+  "desiredConfigurationRevision": 43
+}

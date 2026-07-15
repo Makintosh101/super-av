@@ -1,0 +1,10 @@
+{
+  "type": "device.stateChanged",
+  "messageId": "not-stable",
+  "deviceId": "dev_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "revision": 881,
+  "changes": {
+    "video.mainOutput.source": "presentation",
+    "audio.microphones.muted": false
+  }
+}

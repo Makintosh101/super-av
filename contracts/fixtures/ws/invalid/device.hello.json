@@ -1,0 +1,9 @@
+{
+  "type": "device.hello",
+  "messageId": "not-stable",
+  "deviceId": "dev_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "agentVersion": "1.0.0",
+  "protocolVersion": "1.0",
+  "lastConfigurationRevision": 42,
+  "lastReportedStateRevision": 880
+}
