@@ -565,7 +565,22 @@ Before opening a pull request, run the relevant validation commands for the chan
 
 A task is not ready for review if required checks have not been run or if failures are unexplained.
 
-## 27. Pull request workflow
+## 27. Remote repository verification
+
+After local validation, but before declaring an Epic complete, confirm that the remote pull request reflects the validated implementation.
+
+Required verification:
+
+- The implementation commit has been pushed to the remote branch.
+- The pull request head SHA matches the latest implementation commit.
+- GitHub reports no merge conflicts.
+- All required GitHub checks have completed successfully.
+- The pull request targets the correct base branch.
+- The pull request is mergeable.
+
+An Epic is not complete until the remote pull request reflects the validated implementation. Local validation alone is not sufficient.
+
+## 28. Pull request workflow
 
 Every pull request must include:
 
@@ -583,7 +598,7 @@ Every pull request must include:
 
 The pull request must make it possible for a reviewer to verify scope, architecture, tests and operational impact without reconstructing the work from memory.
 
-## 28. Review workflow
+## 29. Review workflow
 
 Reviewers must verify:
 
@@ -604,7 +619,7 @@ Reviewers must verify:
 
 Review is an architecture and product-safety gate, not only a code-quality check.
 
-## 29. Merge workflow
+## 30. Merge workflow
 
 A change may merge only when:
 
@@ -619,7 +634,7 @@ A change may merge only when:
 
 No epic may advance through its review gate while code, contracts, migrations, tests and documentation disagree.
 
-## 30. Release workflow
+## 31. Release workflow
 
 Every release must produce:
 
@@ -633,7 +648,7 @@ Every release must produce:
 
 Release evidence must describe what changed, how it was validated, how it is deployed and how it can be recovered.
 
-## 31. Epic workflow
+## 32. Epic workflow
 
 Each epic follows:
 
@@ -645,6 +660,9 @@ Implement
   │
   ▼
 Validate
+  │
+  ▼
+Remote Repository Verification
   │
   ▼
 Review Gate
@@ -661,9 +679,9 @@ Next Epic
 
 No epic begins implementation until its prerequisites are satisfied.
 
-No epic is complete until its review gate has passed.
+No epic is complete until remote repository verification is satisfied and its review gate has passed.
 
-## 32. Review gates
+## 33. Review gates
 
 Each review gate confirms:
 
@@ -675,8 +693,9 @@ Each review gate confirms:
 - Platform Principles are still followed
 - No unnecessary complexity was introduced
 - Required contracts, migrations and tests are aligned
+- Remote pull request state matches the validated implementation
 
-## 33. Repository structure
+## 34. Repository structure
 
 The repository is organized around these concerns:
 
