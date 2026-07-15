@@ -28,3 +28,10 @@ Implemented Phase 1 cloud provisioning, identity, pairing and assignment logic. 
 - Added the Phase 1 endpoint agent foundation with service lifecycle stubs, local schema migration, protected identity metadata storage, provisioning client, pairing display source, cloud connection manager and localhost diagnostics API.
 - Added endpoint unit coverage for service logging, schema compatibility checks, identity persistence, provisioning failure visibility, pairing expiry handling, cloud hello/heartbeat messages and local API localhost authentication.
 - Documented endpoint scope boundaries, Windows service scripts, local database schema and diagnostics API behaviour.
+
+
+## 2026-07-15 — P1-EPIC-06 Real-Time Gateway, Presence, Commands and State Transport
+
+- Added the Phase 1 repository-local real-time gateway implementation covering authenticated device WebSocket handshake, temporary presence, browser room sessions, command creation/delivery/status tracking, reported state ingestion and health ingestion.
+- Added unit coverage for secure gateway handshake rejection, heartbeat/offline transitions, room controller takeover, command idempotency/status lifecycle, logical command validation, stale reported-state rejection and health severity validation.
+- Documented gateway scope boundaries, contract reuse, no-migration impact, security constraints and Epic 6 completion evidence.

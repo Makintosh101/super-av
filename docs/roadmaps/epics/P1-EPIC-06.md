@@ -67,3 +67,27 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## Completion record
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-0401 — Authenticated device WebSocket handshake implemented with secure transport enforcement, device credential validation, `device.hello` processing and `server.welcome` response.
+- P1-BE-0402 — Heartbeat-backed temporary presence implemented with online/offline transitions and browser broadcasts.
+- P1-BE-0403 — Browser room session implemented with authenticated room subscription, multiple viewers and one active controller with Technician/Admin takeover.
+- P1-BE-0404 — Command creation service implemented with server-side role/company/room/session/capability/value/expiry/idempotency validation and audit evidence.
+- P1-BE-0405 — Command delivery, acknowledgement and completion tracking implemented with per-device routing, expiry checks, duplicate idempotency protection, browser broadcasts and audit evidence.
+- P1-BE-0406 — Reported state ingestion implemented with authenticated device matching and monotonic revision enforcement.
+- P1-BE-0407 — Health event ingestion implemented with status, issue-code, severity and first-observed validation plus retention metadata.
+
+Completion evidence:
+
+- Tests: `npm run check`, `npm test`, `git diff --check`.
+- Migrations: no migration added; P1-BE-0204 cloud command/state/event tables remain the durable schema baseline.
+- Contracts: existing WebSocket message schemas and command API contract reused; no public contract version change required.
+- Infrastructure: no infrastructure changes and no new inbound port; implementation remains framework-neutral gateway service logic.
+- Known limitations: deployed WebSocket server/backplane, web application screens, endpoint command execution, adapter host, simulator and TouchDesigner behaviour remain out of scope for this Epic.
+- Rollback: remove the gateway service, gateway tests and documentation status updates; no database or infrastructure rollback is required.
+- Decision Requests: none created; confirmed ADR-014 resolved the room controller behaviour referenced by P1-BE-0403.
