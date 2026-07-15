@@ -1,0 +1,26 @@
+{
+  "deviceId": "dev_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "manifestVersion": "1.0",
+  "adapters": [
+    {
+      "adapterType": "touchdesigner",
+      "adapterVersion": "1.0.0",
+      "capabilities": [
+        { "id": "preset.activate", "version": "1.0" },
+        { "id": "video.output.selectSource", "version": "1.0" },
+        { "id": "holding.show", "version": "1.0" },
+        { "id": "holding.hide", "version": "1.0" },
+        { "id": "audio.microphones.setMuted", "version": "1.0" },
+        { "id": "audio.master.setVolume", "version": "1.0" }
+      ]
+    },
+    {
+      "adapterType": "system_health",
+      "adapterVersion": "1.0.0",
+      "capabilities": [
+        { "id": "system.getStatus", "version": "1.0" },
+        { "id": "system.restartApplication", "version": "1.0" }
+      ]
+    }
+  ]
+}

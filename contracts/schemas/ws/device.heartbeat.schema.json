@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/device.heartbeat.schema.json",
+  "title": "device.heartbeat",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "sentAt",
+    "agentUptimeSeconds",
+    "adapterHealth"
+  ],
+  "properties": {
+    "type": {
+      "const": "device.heartbeat"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "sentAt": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/utcTimestamp"
+    },
+    "agentUptimeSeconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "adapterHealth": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/adapterHealth"
+    }
+  },
+  "additionalProperties": false
+}

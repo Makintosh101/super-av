@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/server.welcome.schema.json",
+  "title": "server.welcome",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "connectionId",
+    "serverTime",
+    "heartbeatIntervalSeconds",
+    "desiredConfigurationRevision"
+  ],
+  "properties": {
+    "type": {
+      "const": "server.welcome"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "connectionId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/connectionId"
+    },
+    "serverTime": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/utcTimestamp"
+    },
+    "heartbeatIntervalSeconds": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 300
+    },
+    "desiredConfigurationRevision": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/configurationRevision"
+    }
+  },
+  "additionalProperties": false
+}
