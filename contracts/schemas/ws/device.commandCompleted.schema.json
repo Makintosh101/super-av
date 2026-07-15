@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/device.commandCompleted.schema.json",
+  "title": "device.commandCompleted",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "commandId",
+    "status",
+    "reportedStateRevision"
+  ],
+  "properties": {
+    "type": {
+      "const": "device.commandCompleted"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "commandId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/commandId"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "succeeded",
+        "failed",
+        "expired",
+        "cancelled",
+        "partially_applied"
+      ]
+    },
+    "reportedStateRevision": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/stateRevision"
+    },
+    "errorCode": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/errorCode"
+    }
+  },
+  "additionalProperties": false
+}

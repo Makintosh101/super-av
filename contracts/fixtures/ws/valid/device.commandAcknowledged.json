@@ -1,0 +1,6 @@
+{
+  "type": "device.commandAcknowledged",
+  "messageId": "msg_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "commandId": "cmd_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "status": "accepted"
+}

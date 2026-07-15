@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/device.command.schema.json",
+  "title": "device.command",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "command"
+  ],
+  "properties": {
+    "type": {
+      "const": "device.command"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "command": {
+      "type": "object",
+      "required": [
+        "commandId",
+        "deviceId",
+        "action",
+        "parameters",
+        "issuedAt",
+        "expiresAt",
+        "configurationRevision",
+        "idempotencyKey"
+      ],
+      "properties": {
+        "commandId": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/commandId"
+        },
+        "deviceId": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/deviceId"
+        },
+        "action": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/logicalAction"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "issuedAt": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/utcTimestamp"
+        },
+        "expiresAt": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/utcTimestamp"
+        },
+        "configurationRevision": {
+          "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/configurationRevision"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 128
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

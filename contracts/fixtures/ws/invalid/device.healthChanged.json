@@ -1,0 +1,13 @@
+{
+  "type": "device.healthChanged",
+  "messageId": "not-stable",
+  "deviceId": "dev_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "status": "degraded",
+  "issues": [
+    {
+      "code": "ADAPTER-8001",
+      "severity": "Warning",
+      "firstObservedAt": "2026-07-14T16:44:30Z"
+    }
+  ]
+}
