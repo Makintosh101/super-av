@@ -193,6 +193,15 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Records include version, package hash, signature metadata, supported versions, operating systems, rollback version and release channel.
 - TouchDesigner licensing is represented as deployment documentation/metadata only, not runtime licence logic.
 
+### Epic 2 completion evidence — 2026-07-15
+
+- P1-BE-0201 complete: `cloud/database/migrations/0001_migration_framework.sql` defines ordered migration and seed tracking tables.
+- P1-BE-0202 complete: `cloud/database/migrations/0002_identity_company_site_room.sql` defines identity, company, site and room tables.
+- P1-BE-0203 complete: `cloud/database/migrations/0003_device_lifecycle.sql` defines device lifecycle, credential, registration, pairing and assignment tables.
+- P1-BE-0204 complete: `cloud/database/migrations/0004_configuration_command_state_event.sql` defines configuration, preset, deployment, command, desired state, reported state, device event and audit tables.
+- P1-BE-0205 complete: `cloud/database/migrations/0005_release_package_metadata.sql` defines release, device release assignment and compatibility metadata tables.
+- Validation: `npm run check` runs documentation and database migration validation.
+
 ## Epic 3 — Cloud provisioning, identity and pairing
 
 ### P1-BE-0301 — Implement unclaimed device registration endpoint

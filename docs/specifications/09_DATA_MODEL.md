@@ -314,3 +314,9 @@ created_at
 - Command idempotency keys are unique within an appropriate scope.
 - A device can have only one active ownership record.
 - A device should have only one active primary room assignment unless multi-room behaviour is explicitly supported.
+
+## Phase 1 migration source of truth
+
+The implemented Phase 1 database foundation is defined by the ordered PostgreSQL migrations in `cloud/database/migrations`. The migrations cover the Epic 3 entities listed in this document and are validated by `npm run check:db`. Seed data is intentionally limited to the initial Blue Elephant company, site and room in `cloud/database/seeds/001_blue_elephant_phase1.sql`.
+
+Private keys are not stored in the cloud database, pairing sessions store `code_hash` rather than raw pairing codes, and all timestamp columns use `timestamptz` so values are stored consistently in UTC.
