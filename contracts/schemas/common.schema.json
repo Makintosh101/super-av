@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/common.schema.json",
+  "title": "Phase 1 Common Contract Types",
+  "type": "object",
+  "$defs": {
+    "messageId": { "type": "string", "pattern": "^msg_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "deviceId": { "type": "string", "pattern": "^dev_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "connectionId": { "type": "string", "pattern": "^conn_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "commandId": { "type": "string", "pattern": "^cmd_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "correlationId": { "type": "string", "pattern": "^corr_[0-9A-HJKMNP-TV-Z]{26}$" },
+    "utcTimestamp": { "type": "string", "format": "date-time", "pattern": "Z$" },
+    "semver": { "type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:[-+][0-9A-Za-z.-]+)?$" },
+    "contractVersion": { "type": "string", "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)$" },
+    "configurationRevision": { "type": "integer", "minimum": 0 },
+    "stateRevision": { "type": "integer", "minimum": 0 },
+    "logicalAction": {
+      "type": "string",
+      "enum": [
+        "system.getStatus",
+        "system.restartApplication",
+        "preset.activate",
+        "video.output.selectSource",
+        "holding.show",
+        "holding.hide",
+        "audio.microphones.setMuted",
+        "audio.master.setVolume"
+      ],
+      "not": { "pattern": "^/|project\\d+|base\\d+|switch\\d+|/project" }
+    },
+    "adapterHealth": { "type": "string", "enum": ["healthy", "degraded", "unhealthy", "offline"] },
+    "errorCode": { "type": "string", "pattern": "^(PROVISIONING|PAIRING|AUTH|COMMAND|CAPABILITY|CONFIGURATION|ADAPTER|PACKAGE)-[0-9]{4}$" },
+    "errorSeverity": { "type": "string", "enum": ["Info", "Warning", "Error", "Critical"] }
+  },
+  "additionalProperties": false
+}

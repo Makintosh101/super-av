@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/device.healthChanged.schema.json",
+  "title": "device.healthChanged",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "deviceId",
+    "status",
+    "issues"
+  ],
+  "properties": {
+    "type": {
+      "const": "device.healthChanged"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "deviceId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/deviceId"
+    },
+    "status": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/adapterHealth"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "severity",
+          "firstObservedAt"
+        ],
+        "properties": {
+          "code": {
+            "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/errorCode"
+          },
+          "severity": {
+            "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/errorSeverity"
+          },
+          "firstObservedAt": {
+            "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/utcTimestamp"
+          },
+          "detail": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

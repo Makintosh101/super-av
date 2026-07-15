@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/ws/device.stateChanged.schema.json",
+  "title": "device.stateChanged",
+  "type": "object",
+  "required": [
+    "type",
+    "messageId",
+    "deviceId",
+    "revision",
+    "changes"
+  ],
+  "properties": {
+    "type": {
+      "const": "device.stateChanged"
+    },
+    "messageId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/messageId"
+    },
+    "deviceId": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/deviceId"
+    },
+    "revision": {
+      "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/stateRevision"
+    },
+    "changes": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "not": {
+          "pattern": "^/|project\\d+|base\\d+|switch\\d+|/project"
+        }
+      },
+      "additionalProperties": {}
+    }
+  },
+  "additionalProperties": false
+}
