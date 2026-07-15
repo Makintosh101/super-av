@@ -1,5 +1,9 @@
 # Documentation Changelog
 
+## 2026-07-15 — Revision 7
+
+Completed Epic 3 cloud database migration foundation. Added ordered PostgreSQL migrations, idempotent Blue Elephant seed data, `check:db` validation and database recovery documentation while preserving the Epic 2 contract validation baseline.
+
 ## 2026-07-14 — Revision 5
 
 Completed Epic 1 repository, delivery controls and documentation baseline. Added placeholder implementation-area READMEs, the Phase 1 task completion checklist, automated documentation checks for task metadata and relative Markdown links, and updated Epic/backlog task status.
