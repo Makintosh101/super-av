@@ -1,0 +1,7 @@
+{
+  "type": "device.heartbeat",
+  "messageId": "msg_01K0ABCDEFGHJKMNPQRSTVWXYZ",
+  "sentAt": "2026-07-14T16:45:20Z",
+  "agentUptimeSeconds": 86122,
+  "adapterHealth": "healthy"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.super-av.local/schemas/configuration/preset.schema.json",
+  "title": "Phase 1 Preset",
+  "type": "object",
+  "required": ["presetId", "name", "actions"],
+  "properties": {
+    "presetId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{1,63}$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "actions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["action", "parameters"],
+        "properties": {
+          "action": { "$ref": "https://contracts.super-av.local/schemas/common.schema.json#/$defs/logicalAction" },
+          "parameters": { "type": "object" },
+          "assetId": { "type": "string", "pattern": "^asset_[A-Za-z0-9_-]+$" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
