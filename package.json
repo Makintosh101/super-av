@@ -6,7 +6,8 @@
   "packageManager": "npm@11.4.2",
   "scripts": {
     "check:docs": "node scripts/check-docs.mjs",
-    "test": "npm run check:docs",
-    "check": "npm run check:docs"
+    "test": "npm run check:docs && npm run check:contracts",
+    "check": "npm run check:docs && npm run check:contracts",
+    "check:contracts": "node scripts/check-contracts.mjs"
   }
 }
