@@ -26,3 +26,12 @@ export const ERROR_CODES = {
   staleReportedState: 'NODE-STATE-1002',
   eventUploadFailed: 'NODE-EVENT-1001'
 };
+Object.assign(ERROR_CODES, {
+  adapterContractInvalid: 'NODE-ADAPTER-1001',
+  adapterStartFailed: 'NODE-ADAPTER-1002',
+  adapterStopFailed: 'NODE-ADAPTER-1003',
+  adapterHealthDegraded: 'NODE-ADAPTER-1004',
+  touchdesignerBridgeFailed: 'NODE-TOUCHDESIGNER-1001',
+  touchdesignerProtocolRejected: 'NODE-TOUCHDESIGNER-1002',
+  touchdesignerRestartLimitReached: 'NODE-TOUCHDESIGNER-1003'
+});

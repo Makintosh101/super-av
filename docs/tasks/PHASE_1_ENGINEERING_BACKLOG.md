@@ -729,6 +729,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0801 — Define internal adapter contract in code
 
+**Status:** Complete — P1-EPIC-09
+
 **Relevant ADRs:** ADR-008, ADR-015, ADR-016, ADR-032  
 **Dependencies:** P1-BE-0104, P1-BE-0601
 
@@ -739,6 +741,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Contract supports TouchDesigner and System Health adapters only in Phase 1.
 
 ### P1-BE-0802 — Implement adapter host lifecycle
+
+**Status:** Complete — P1-EPIC-09
 
 **Relevant ADRs:** ADR-016, ADR-021, ADR-026, ADR-032  
 **Dependencies:** P1-BE-0801, P1-BE-0602
@@ -752,6 +756,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0803 — Implement System Health adapter
 
+**Status:** Complete — P1-EPIC-09
+
 **Relevant ADRs:** ADR-016, ADR-021, ADR-022, ADR-026  
 **Dependencies:** P1-BE-0802
 
@@ -763,6 +769,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0804 — Implement simulated node adapter
 
+**Status:** Complete — P1-EPIC-09
+
 **Relevant ADRs:** ADR-025, ADR-026, ADR-032  
 **Dependencies:** P1-BE-0802, P1-BE-0104
 
@@ -773,6 +781,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Simulator is usable in integration tests before large-scale hardware integration.
 
 ### P1-BE-0805 — Implement TouchDesigner process launch
+
+**Status:** Complete — P1-EPIC-09
 
 **Relevant ADRs:** ADR-016, ADR-024, ADR-026, ADR-032  
 **Dependencies:** P1-BE-0802, P1-BE-0704
@@ -786,6 +796,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0806 — Implement TouchDesigner localhost WebSocket bridge
 
+**Status:** Complete — P1-EPIC-09
+
 **Relevant ADRs:** ADR-002, ADR-008, ADR-015, ADR-016, ADR-026  
 **Dependencies:** P1-BE-0805
 
@@ -798,6 +810,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0807 — Implement TouchDesigner command handlers
 
+**Status:** Complete — P1-EPIC-09
+
 **Relevant ADRs:** ADR-008, ADR-015, ADR-016, ADR-017, ADR-026  
 **Dependencies:** P1-BE-0806, P1-BE-0701
 
@@ -808,6 +822,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Command results update reported state.
 
 ### P1-BE-0808 — Implement TouchDesigner heartbeat and restart policy
+
+**Status:** Complete — P1-EPIC-09
 
 **Relevant ADRs:** ADR-021, ADR-024, ADR-027, ADR-026  
 **Dependencies:** P1-BE-0806
@@ -1191,3 +1207,16 @@ Each completed task must record:
 - Known limitations.
 - Recovery or rollback notes where applicable.
 - Referenced ADRs.
+
+### P1-EPIC-09 completion evidence
+
+- Completed tasks: P1-BE-0801, P1-BE-0802, P1-BE-0803, P1-BE-0804, P1-BE-0805, P1-BE-0806, P1-BE-0807 and P1-BE-0808.
+- Changed behaviour: endpoint adapter host, System Health adapter, simulator and TouchDesigner adapter now cover Phase 1 lifecycle, health, command, bridge and heartbeat restart requirements.
+- Files changed: `endpoint/agent/adapters/adapter-contract.mjs`, `endpoint/agent/adapters/adapter-host.mjs`, `endpoint/agent/adapters/system-health-adapter.mjs`, `endpoint/agent/adapters/simulated-node-adapter.mjs`, `endpoint/agent/adapters/touchdesigner-adapter.mjs`, `endpoint/agent/errors.mjs`, `tests/adapter-host.test.mjs`, `endpoint/README.md`, `docs/roadmaps/epics/P1-EPIC-09.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed.
+- Migrations added: none.
+- Contracts updated: none.
+- Documentation updated: endpoint README, P1-EPIC-09 record, Engineering Backlog and changelog.
+- Known limitations: packaging, installer, package validation, web screens and hardware acceptance remain later authorised Epic scope.
+- Recovery or rollback notes: revert the P1-EPIC-09 commit; no database rollback is required.
+- Referenced ADRs: ADR-002, ADR-008, ADR-015, ADR-016, ADR-017, ADR-021, ADR-022, ADR-024, ADR-025, ADR-026, ADR-027 and ADR-032.
