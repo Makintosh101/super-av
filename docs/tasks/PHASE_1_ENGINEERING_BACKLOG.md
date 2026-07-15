@@ -422,6 +422,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-008, ADR-012, ADR-015, ADR-020, ADR-026  
 **Dependencies:** P1-BE-0105, P1-BE-0204
+**Status:** Complete — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -433,6 +434,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-003, ADR-012, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0501
+**Status:** Complete — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -445,6 +447,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-001, ADR-012, ADR-026  
 **Dependencies:** P1-BE-0502, P1-BE-0306
+**Status:** Complete — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -456,6 +459,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-009, ADR-012, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0503
+**Status:** Blocked pending Decision Request `DR-P1-EPIC-07-ADR-009-CONFIGURATION-REPORTING.md` — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -468,6 +472,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-020, ADR-026  
 **Dependencies:** P1-BE-0105, P1-BE-0204
+**Status:** Complete — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -480,6 +485,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-003, ADR-010, ADR-024, ADR-029  
 **Dependencies:** P1-BE-0205
+**Status:** Blocked pending Decision Request `DR-P1-EPIC-07-ADR-010-RELEASE-MANIFEST.md` — P1-EPIC-07
 
 **Acceptance criteria:**
 
@@ -487,6 +493,18 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Manifest includes hash, signature, package size, supported versions, required disk space and rollback version.
 - Incompatible deployments are blocked by compatibility metadata.
 - TouchDesigner licence handling remains a deployment concern.
+
+### P1-EPIC-07 partial completion evidence
+
+- Changed behaviour: added cloud-side draft configuration validation, immutable publication, desired configuration fetch for assigned active devices, and minimal media asset metadata.
+- Files changed: `cloud/configuration-service.mjs`, `tests/configuration-service.test.mjs`, `cloud/README.md`, `contracts/openapi/node-api.yaml`, `docs/tasks/DR-P1-EPIC-07-ADR-009-CONFIGURATION-REPORTING.md`, `docs/tasks/DR-P1-EPIC-07-ADR-010-RELEASE-MANIFEST.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md`, `docs/roadmaps/epics/P1-EPIC-07.md`, `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` and `git diff --check`.
+- Migrations: none added; existing Epic 3 migrations already define configuration, command, state, event and release package metadata tables.
+- Contracts: `contracts/openapi/node-api.yaml` now defines the desired configuration response.
+- Documentation: cloud README, backlog, changelog and Decision Requests updated.
+- Known limitations: P1-BE-0504 and P1-BE-0506 are blocked until ADR-009 and ADR-010 are confirmed.
+- Recovery or rollback notes: revert the P1-EPIC-07 commit to remove repository-local configuration service behaviour and contract/docs updates.
+- Referenced ADRs: ADR-001, ADR-003, ADR-008, ADR-009, ADR-010, ADR-012, ADR-015, ADR-019, ADR-020, ADR-024, ADR-026 and ADR-029.
 
 ## Epic 6 — Endpoint agent foundation
 

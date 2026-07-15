@@ -93,7 +93,13 @@ paths:
     get:
       summary: Fetch desired configuration for the authenticated node
       responses:
-        '200': { description: Desired configuration }
+        '200':
+          description: Desired configuration for an assigned, active node
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DesiredConfigurationResponse' }
+        '403': { description: Node is not allowed to fetch production configuration, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
+        '404': { description: No desired configuration is published, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
   /api/v1/configuration/report:
     post:
       summary: Report node configuration activation status
@@ -186,6 +192,25 @@ components:
         roomId: { type: string }
         status: { type: string, enum: [active] }
         assignedAt: { type: string, format: date-time, pattern: 'Z$' }
+    DesiredConfigurationResponse:
+      type: object
+      required: [deviceId, deploymentId, configurationRevision, schemaVersion, publishedAt, assetIds, packageReferences]
+      properties:
+        deviceId: { type: string }
+        deploymentId: { type: string }
+        configurationRevision: { type: integer, minimum: 1 }
+        schemaVersion: { type: string, enum: [phase1.configuration.v1] }
+        publishedAt: { type: string, format: date-time, pattern: 'Z$' }
+        assetIds:
+          type: array
+          items: { type: string }
+        packageReferences:
+          type: array
+          items:
+            type: object
+            required: [releaseId]
+            properties:
+              releaseId: { type: string }
     ErrorResponse:
       type: object
       required: [error]

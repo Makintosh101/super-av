@@ -35,3 +35,9 @@ Implemented Phase 1 cloud provisioning, identity, pairing and assignment logic. 
 - Added the Phase 1 repository-local real-time gateway implementation covering authenticated device WebSocket handshake, temporary presence, browser room sessions, command creation/delivery/status tracking, reported state ingestion and health ingestion.
 - Added unit coverage for secure gateway handshake rejection, heartbeat/offline transitions, room controller takeover, command idempotency/status lifecycle, logical command validation, stale reported-state rejection and health severity validation.
 - Documented gateway scope boundaries, contract reuse, no-migration impact, security constraints and Epic 6 completion evidence.
+
+## 2026-07-15 — P1-EPIC-07 partial implementation
+
+- Added cloud configuration service support for draft validation, immutable publication, desired configuration fetch and minimal media asset metadata.
+- Added unit coverage for validation failures, publication supersession, desired configuration authorization and media metadata URL rejection.
+- Added desired configuration contract details and Decision Requests blocking configuration report and release manifest implementation until ADR-009 and ADR-010 are confirmed.
