@@ -306,6 +306,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0401 — Implement authenticated device WebSocket handshake
 
+**Status:** Complete — P1-EPIC-06
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0101, P1-BE-0305
 
@@ -317,6 +319,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Device identity remains stable across IP and NAT changes.
 
 ### P1-BE-0402 — Implement heartbeat and presence tracking
+
+**Status:** Complete — P1-EPIC-06
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-021, ADR-026  
 **Dependencies:** P1-BE-0401
@@ -330,6 +334,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0403 — Implement browser room WebSocket session
 
+**Status:** Complete — P1-EPIC-06
+
 **Relevant ADRs:** ADR-014, ADR-026, ADR-028  
 **Dependencies:** P1-BE-0402
 
@@ -342,6 +348,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0404 — Implement command creation service
 
+**Status:** Complete — P1-EPIC-06
+
 **Relevant ADRs:** ADR-008, ADR-012, ADR-013, ADR-014, ADR-015, ADR-026  
 **Dependencies:** P1-BE-0103, P1-BE-0204, P1-BE-0403
 
@@ -353,6 +361,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Gateway receives only authorised commands.
 
 ### P1-BE-0405 — Implement command delivery, acknowledgement and completion tracking
+
+**Status:** Complete — P1-EPIC-06
 
 **Relevant ADRs:** ADR-002, ADR-012, ADR-013, ADR-017, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0404
@@ -367,6 +377,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0406 — Implement reported state ingestion
 
+**Status:** Complete — P1-EPIC-06
+
 **Relevant ADRs:** ADR-012, ADR-019, ADR-021, ADR-026  
 **Dependencies:** P1-BE-0405, P1-BE-0204
 
@@ -379,6 +391,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0407 — Implement health event ingestion
 
+**Status:** Complete — P1-EPIC-06
+
 **Relevant ADRs:** ADR-021, ADR-022, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0402, P1-BE-0204
 
@@ -388,6 +402,19 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - CPU, memory, GPU, versions, active preset and recent errors can be represented.
 - Health events are retained according to Phase 1 retention metadata.
 - Degraded health is visible in device detail and diagnostics.
+
+
+### P1-EPIC-06 completion evidence
+
+- Changed behaviour: cloud real-time gateway now has framework-neutral logic for authenticated secure device handshake, heartbeat-backed temporary presence, browser room session/controller state, authorised logical command creation, command delivery, acknowledgement/completion tracking, monotonic reported state ingestion and health event ingestion.
+- Files changed: `cloud/gateway/gateway-service.mjs`, `tests/gateway-service.test.mjs`, `cloud/README.md`, `docs/roadmaps/epics/P1-EPIC-06.md`, `docs/CHANGELOG.md`.
+- Tests and checks: `npm run check`, `npm test`, `git diff --check`.
+- Migrations: no migration added; existing P1-BE-0204 cloud command/state/event tables remain the durable schema baseline for a future transport/database adapter.
+- Contracts: existing WebSocket message schemas and command API contract reused without version change.
+- Documentation: cloud README, Epic completion record and changelog updated.
+- Known limitations: implementation is framework-neutral service logic and does not add deployed WebSocket infrastructure, Redis/backplane, web application screens, endpoint command execution, adapter host or TouchDesigner behaviour; those remain later Epic scope.
+- Recovery/rollback: remove `cloud/gateway/gateway-service.mjs`, `tests/gateway-service.test.mjs` and documentation status updates; no database or infrastructure rollback is required.
+- Referenced ADRs: ADR-001, ADR-002, ADR-008, ADR-012, ADR-013, ADR-014, ADR-015, ADR-017, ADR-019, ADR-021, ADR-022, ADR-023, ADR-026, ADR-028.
 
 ## Epic 5 — Configuration, assets and releases
 
