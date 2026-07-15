@@ -1,6 +1,6 @@
 import http from 'node:http';
 import { EndpointError, ERROR_CODES } from './errors.mjs';
-export function createLocalApi({ diagnostics, authToken }) {
+export function createLocalApi({ diagnostics, authToken, offlineControl }) {
   return http.createServer((req, res) => {
     if (req.headers.authorization !== `Bearer ${authToken}`) {
       res.writeHead(401, { 'content-type': 'application/json' });
@@ -15,6 +15,21 @@ export function createLocalApi({ diagnostics, authToken }) {
     if (req.url === '/diagnostics/export' && req.method === 'POST') {
       res.writeHead(202, { 'content-type': 'application/json' });
       res.end(JSON.stringify({ status: 'accepted' }));
+      return;
+    }
+    if (req.url === '/offline/commands' && req.method === 'POST' && offlineControl) {
+      let body = '';
+      req.on('data', (chunk) => { body += chunk; });
+      req.on('end', async () => {
+        try {
+          const result = await offlineControl(JSON.parse(body || '{}'));
+          res.writeHead(202, { 'content-type': 'application/json' });
+          res.end(JSON.stringify(result));
+        } catch (error) {
+          res.writeHead(400, { 'content-type': 'application/json' });
+          res.end(JSON.stringify({ error: { code: error.code ?? ERROR_CODES.localApiFailed, message: error.message } }));
+        }
+      });
       return;
     }
     res.writeHead(404, { 'content-type': 'application/json' });

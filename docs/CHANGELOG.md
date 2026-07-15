@@ -36,6 +36,10 @@ Implemented Phase 1 cloud provisioning, identity, pairing and assignment logic. 
 - Added unit coverage for secure gateway handshake rejection, heartbeat/offline transitions, room controller takeover, command idempotency/status lifecycle, logical command validation, stale reported-state rejection and health severity validation.
 - Documented gateway scope boundaries, contract reuse, no-migration impact, security constraints and Epic 6 completion evidence.
 
+## 2026-07-15 — P1-EPIC-08 endpoint command, state, configuration and offline operation
+
+Completed P1-EPIC-08 local endpoint execution scope. Added command dispatch and deduplication modules, desired-configuration validation and known-good activation state, reported-state and local event queues, offline User/Technician control boundary, endpoint documentation, backlog completion evidence and unit tests. No public contract, cloud migration, endpoint migration or infrastructure change was required.
+
 ## 2026-07-15 — P1-EPIC-07 partial implementation
 
 - Added cloud configuration service support for draft validation, immutable publication, desired configuration fetch and minimal media asset metadata.

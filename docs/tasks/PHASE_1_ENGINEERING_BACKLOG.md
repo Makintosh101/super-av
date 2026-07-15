@@ -622,6 +622,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-008, ADR-012, ADR-013, ADR-015, ADR-026  
 **Dependencies:** P1-BE-0606, P1-BE-0103
 
+**Status:** Complete — P1-EPIC-08
+
 **Acceptance criteria:**
 
 - Dispatcher validates command expiry, action allow-list, configuration revision, idempotency key and required capability before adapter execution.
@@ -632,6 +634,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-001, ADR-012, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0701, P1-BE-0602
+
+**Status:** Complete — P1-EPIC-08
 
 **Acceptance criteria:**
 
@@ -644,6 +648,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-012, ADR-020, ADR-026  
 **Dependencies:** P1-BE-0503, P1-BE-0606
 
+**Status:** Complete — P1-EPIC-08
+
 **Acceptance criteria:**
 
 - Agent downloads desired configuration after claim and assignment.
@@ -654,6 +660,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-009, ADR-012, ADR-027, ADR-026  
 **Dependencies:** P1-BE-0703, P1-BE-0504
+
+**Status:** Complete — P1-EPIC-08
 
 **Acceptance criteria:**
 
@@ -667,6 +675,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-012, ADR-019, ADR-021, ADR-026  
 **Dependencies:** P1-BE-0701, P1-BE-0406
 
+**Status:** Complete — P1-EPIC-08
+
 **Acceptance criteria:**
 
 - Agent publishes state changes with increasing revisions.
@@ -678,6 +688,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-004, ADR-019, ADR-021, ADR-022, ADR-026  
 **Dependencies:** P1-BE-0602, P1-BE-0606
+
+**Status:** Complete — P1-EPIC-08
 
 **Acceptance criteria:**
 
@@ -691,12 +703,27 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-004, ADR-005, ADR-014, ADR-018, ADR-026  
 **Dependencies:** P1-BE-0607, P1-BE-0701
 
+**Status:** Complete — P1-EPIC-08
+
 **Acceptance criteria:**
 
 - Local User and Technician controls can execute permitted cached room actions while cloud is unavailable.
 - Ownership, certificates, tenant membership and cloud security changes remain cloud-only.
 - Offline commands use the same logical capabilities and validation path as cloud commands.
 - Any local draft programming created by Technician is marked draft and requires cloud review before publish.
+
+
+### P1-EPIC-08 completion evidence
+
+- Changed behaviour: endpoint agent now validates and dispatches logical commands, persists command deduplication records, downloads and validates desired configuration, activates known-good configuration state, publishes reported state revisions, buffers local audit/events, and enforces cached User/Technician offline controls without cloud-only security changes.
+- Files changed: `endpoint/agent/command-dispatcher.mjs`, `endpoint/agent/command-deduplication-store.mjs`, `endpoint/agent/configuration-manager.mjs`, `endpoint/agent/state-and-event-queues.mjs`, `endpoint/agent/offline-control.mjs`, `endpoint/agent/errors.mjs`, `endpoint/agent/local-api.mjs`, `tests/endpoint-agent.test.mjs`, `endpoint/README.md`, `docs/roadmaps/epics/P1-EPIC-08.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md`, `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation.
+- Migrations added: none; no cloud or endpoint schema change was required.
+- Contracts updated: none; existing logical command, node message and local API boundaries were reused.
+- Documentation updated: endpoint README, P1-EPIC-08 record, Engineering Backlog and changelog.
+- Known limitations: ADR-005 remains Proposed and ADR-009 remains In Review in the local repository; implementation stays inside existing task acceptance criteria and does not add emergency-admin, ownership, certificate, tenant or local publish workflows.
+- Recovery or rollback notes: revert the P1-EPIC-08 commit to remove endpoint execution modules and related documentation/tests; no database rollback is required.
+- Referenced ADRs: ADR-001, ADR-004, ADR-005, ADR-008, ADR-009, ADR-012, ADR-013, ADR-014, ADR-015, ADR-018, ADR-019, ADR-020, ADR-021, ADR-022, ADR-026 and ADR-027.
 
 ## Epic 8 — Adapter host, TouchDesigner adapter and simulator
 

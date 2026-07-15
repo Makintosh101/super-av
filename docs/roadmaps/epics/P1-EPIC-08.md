@@ -71,3 +71,34 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+
+## P1-EPIC-08 completion evidence
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-0701 — command dispatcher validates expiry, logical action allow-list, active configuration revision, idempotency key and required capability, then emits separate acknowledgement and completion messages.
+- P1-BE-0702 — command deduplication persists command IDs and idempotency keys for the replay window and logs deduplication decisions.
+- P1-BE-0703 — desired configuration download and local validation reject unsupported schemas, capabilities and asset references before activation.
+- P1-BE-0704 — known-good activation persists active, desired and failed revision state and reports activation results to the cloud boundary supplied by the runtime.
+- P1-BE-0705 — reported state publisher emits increasing revisions, queues while offline and blocks stale remote overwrites.
+- P1-BE-0706 — local audit/event queue stores UTC-ordered events, visible capacity and disk-space diagnostics, and failed-upload evidence for retry.
+- P1-BE-0707 — offline local User/Technician controls execute only cached permitted room actions through the same command validation path; cloud-only security and ownership changes are rejected, and Technician programming is marked draft pending cloud review.
+
+Validation evidence:
+
+- `npm test` — passed documentation, contract, database and unit-test validation on 2026-07-15.
+
+Migrations: no new cloud or endpoint migration was required; P1-EPIC-08 uses the endpoint local persistence concepts created by the existing endpoint schema foundation.
+
+Contracts: no public cloud contract change was required; commands continue to use the existing logical command and node message contracts.
+
+Documentation: endpoint README, Engineering Backlog, Epic record and changelog were updated.
+
+Known limitations: ADR-005 remains Proposed and ADR-009 remains In Review in the local repository, so P1-EPIC-08 records offline permissions and configuration drift handling only within the existing accepted task scope and does not expand ownership, emergency admin or local save-and-publish behaviour.
+
+Recovery/rollback: revert the P1-EPIC-08 commit to remove endpoint command/configuration/state/offline modules and related tests/docs; no database rollback is required.
+
+Review Gate: reached; do not begin P1-EPIC-09 until P1-EPIC-08 Review Gate approval is complete.
