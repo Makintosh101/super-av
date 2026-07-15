@@ -15,7 +15,11 @@ paths:
         - $ref: '#/components/parameters/CorrelationId'
         - $ref: '#/components/parameters/IdempotencyKey'
       responses:
-        '202': { description: Registration accepted for unclaimed device }
+        '202':
+          description: Registration accepted for unclaimed device
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RegistrationResponse' }
         '409': { description: Device already claimed, suspended or retired, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
   /api/v1/node/registrations/{registrationId}:
     get:
@@ -28,14 +32,21 @@ paths:
           schema: { type: string }
         - $ref: '#/components/parameters/CorrelationId'
       responses:
-        '200': { description: Registration status for unclaimed, claimed, suspended or retired devices }
+        '200':
+          description: Registration status for unclaimed, claimed, suspended, retired or revoked devices
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RegistrationStatusResponse' }
   /api/v1/pairing/sessions:
     post:
       summary: Create a pairing session
-      security:
-        - userSession: []
+      security: []
       responses:
-        '201': { description: Pairing session created }
+        '201':
+          description: Pairing session created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PairingSessionResponse' }
   /api/v1/pairing/sessions/{code}/claim:
     post:
       summary: Claim a pairing session by code
@@ -49,13 +60,30 @@ paths:
         - $ref: '#/components/parameters/CorrelationId'
         - $ref: '#/components/parameters/IdempotencyKey'
       responses:
-        '200': { description: Pairing claimed }
+        '200':
+          description: Pairing claimed and certificate metadata recorded
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PairingClaimResponse' }
         '410': { description: Pairing code expired, content: { application/json: { schema: { $ref: '#/components/schemas/ErrorResponse' } } } }
-  /api/v1/node/certificates/rotate:
+  /api/v1/devices/{deviceId}/assignments:
     post:
-      summary: Rotate a node certificate
+      summary: Assign a claimed Phase 1 device to the Phase 1 room
+      security:
+        - userSession: []
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema: { type: string }
+        - $ref: '#/components/parameters/CorrelationId'
+        - $ref: '#/components/parameters/IdempotencyKey'
       responses:
-        '200': { description: Replacement certificate issued }
+        '200':
+          description: Device assigned to room
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RoomAssignmentResponse' }
   /api/v1/node/bootstrap:
     get:
       summary: Fetch node bootstrap document
@@ -92,6 +120,72 @@ components:
       required: true
       schema: { type: string, minLength: 8, maxLength: 128 }
   schemas:
+
+    RegistrationResponse:
+      type: object
+      required: [registrationId, deviceId, status, bootstrapStatus, expiresAt]
+      properties:
+        registrationId: { type: string }
+        deviceId: { type: string }
+        status: { type: string, enum: [pending] }
+        bootstrapStatus: { type: string, enum: [limited] }
+        expiresAt: { type: string, format: date-time, pattern: 'Z$' }
+    RegistrationStatusResponse:
+      type: object
+      required: [registrationId, deviceId, status, bootstrapStatus]
+      properties:
+        registrationId: { type: string }
+        deviceId: { type: string }
+        status: { type: string, enum: [pending, unclaimed, claimed, assigned, suspended, retired, revoked] }
+        bootstrapStatus: { type: string, enum: [limited, claimed] }
+        companyId: { type: string }
+        assignedRoom:
+          type: object
+          required: [roomId, roomCodeName]
+          properties:
+            roomId: { type: string }
+            roomCodeName: { type: string }
+    PairingSessionResponse:
+      type: object
+      required: [pairingSessionId, deviceId, code, qrToken, expiresAt, attempts]
+      properties:
+        pairingSessionId: { type: string }
+        deviceId: { type: string }
+        code: { type: string, minLength: 6, maxLength: 12 }
+        qrToken: { type: string }
+        expiresAt: { type: string, format: date-time, pattern: 'Z$' }
+        attempts: { type: integer, minimum: 0 }
+    PairingClaimResponse:
+      type: object
+      required: [deviceId, companyId, status, certificate]
+      properties:
+        deviceId: { type: string }
+        companyId: { type: string }
+        status: { type: string, enum: [confirmation_required, claimed] }
+        confirmation:
+          type: object
+          properties:
+            fingerprint: { type: string }
+            installationId: { type: string }
+        certificate:
+          type: object
+          required: [credentialId, deviceId, certificateThumbprint, status, issuedAt, expiresAt]
+          properties:
+            credentialId: { type: string }
+            deviceId: { type: string }
+            certificateThumbprint: { type: string }
+            status: { type: string, enum: [active] }
+            issuedAt: { type: string, format: date-time, pattern: 'Z$' }
+            expiresAt: { type: string, format: date-time, pattern: 'Z$' }
+    RoomAssignmentResponse:
+      type: object
+      required: [assignmentId, deviceId, roomId, status, assignedAt]
+      properties:
+        assignmentId: { type: string }
+        deviceId: { type: string }
+        roomId: { type: string }
+        status: { type: string, enum: [active] }
+        assignedAt: { type: string, format: date-time, pattern: 'Z$' }
     ErrorResponse:
       type: object
       required: [error]

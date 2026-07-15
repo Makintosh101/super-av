@@ -6,18 +6,35 @@ Cloud-owned Phase 1 implementation files belong here when a scoped task approves
 
 ## Phase 1 status
 
-This directory is intentionally a placeholder for Epic 1. It does not define or implement services, public APIs, workers, authentication methods, database entities or runtime behaviour.
+P1-EPIC-04 adds the repository-local provisioning service implementation for the approved Phase 1 registration, pairing, certificate metadata and room-assignment workflows. It does not add a deployed server, new inbound port or infrastructure resource.
+
+## Provisioning implementation
+
+`cloud/provisioning/provisioning-service.mjs` implements the approved endpoint behaviour behind framework-neutral functions so a future transport layer can call the same product logic without changing the security model:
+
+- unclaimed device registration stores limited bootstrap metadata and deduplicates repeated pending registration by device identity and fingerprint;
+- registration polling returns only limited pre-claim status unless an authorised Phase 1 company actor requests post-claim assignment details;
+- pairing sessions are short-lived, device-bound and one-time use, with hashed pairing-code storage;
+- pairing claim requires a Blue Elephant `admin` or `technician`, enforces expiry and writes audit evidence;
+- certificate issuance records metadata only and rejects endpoint private keys;
+- room assignment validates company ownership before assigning a claimed device to the Phase 1 room.
 
 ## Build commands
 
-No cloud build command exists yet. Future tasks must add build commands with the implementation they authorize.
+No cloud deployment build command exists yet. Future tasks must add build commands with the implementation they authorize.
 
 ## Test commands
 
-No cloud-specific test command exists yet. Repository documentation checks run from the root with:
+Run provisioning unit tests from the repository root with:
 
 ```sh
-npm run check:docs
+npm run test:unit
+```
+
+Run all repository validation with:
+
+```sh
+npm run check
 ```
 
 ## Related specifications
