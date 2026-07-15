@@ -23,3 +23,8 @@ Added network roaming, TLS reconnection, certificate lifecycle, replay protectio
 ## P1-EPIC-04
 
 Implemented Phase 1 cloud provisioning, identity, pairing and assignment logic. Added framework-neutral provisioning handlers, endpoint contract schemas, provisioning metadata migration, tests for registration/pairing/credential/assignment security rules and Epic 4 completion evidence.
+## 2026-07-15 — P1-EPIC-05 Endpoint Agent Foundation
+
+- Added the Phase 1 endpoint agent foundation with service lifecycle stubs, local schema migration, protected identity metadata storage, provisioning client, pairing display source, cloud connection manager and localhost diagnostics API.
+- Added endpoint unit coverage for service logging, schema compatibility checks, identity persistence, provisioning failure visibility, pairing expiry handling, cloud hello/heartbeat messages and local API localhost authentication.
+- Documented endpoint scope boundaries, Windows service scripts, local database schema and diagnostics API behaviour.

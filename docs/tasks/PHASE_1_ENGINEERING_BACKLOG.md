@@ -465,6 +465,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0601 — Create Windows service skeleton
 
+**Status:** Complete — P1-EPIC-05
+
 **Relevant ADRs:** ADR-026, ADR-031  
 **Dependencies:** P1-BE-0001
 
@@ -476,6 +478,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0602 — Implement local SQLite database migrations
 
+**Status:** Complete — P1-EPIC-05
+
 **Relevant ADRs:** ADR-003, ADR-004, ADR-012, ADR-021, ADR-026  
 **Dependencies:** P1-BE-0601
 
@@ -486,6 +490,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Service refuses incompatible local schema versions with explicit error.
 
 ### P1-BE-0603 — Implement device identity generation and protected storage
+
+**Status:** Complete — P1-EPIC-05
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0602
@@ -499,6 +505,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0604 — Implement provisioning client
 
+**Status:** Complete — P1-EPIC-05
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0301, P1-BE-0302, P1-BE-0603
 
@@ -511,6 +519,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0605 — Implement pairing-code display data source
 
+**Status:** Complete — P1-EPIC-05
+
 **Relevant ADRs:** ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0303, P1-BE-0604
 
@@ -521,6 +531,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Pairing code is not persisted as a permanent credential.
 
 ### P1-BE-0606 — Implement cloud WebSocket connection manager
+
+**Status:** Complete — P1-EPIC-05
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-019, ADR-026  
 **Dependencies:** P1-BE-0401, P1-BE-0604
@@ -534,6 +546,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0607 — Implement local API for diagnostics and commissioning
 
+**Status:** Complete — P1-EPIC-05
+
 **Relevant ADRs:** ADR-004, ADR-005, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0605, P1-BE-0606
 
@@ -543,6 +557,18 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - It exposes identity summary, network state, pairing status, cloud connection state, assigned room, logs path and diagnostic export trigger.
 - It does not provide arbitrary shell command execution.
 - Local API failure is logged with explicit error codes.
+
+### P1-EPIC-05 completion evidence
+
+- Changed behaviour: endpoint foundation now includes service lifecycle stubs, local persistence schema, identity generation, provisioning, pairing display, cloud connection and local diagnostics API modules.
+- Files changed: `endpoint/agent/`, `endpoint/migrations/`, `endpoint/scripts/`, `endpoint/README.md`, `tests/endpoint-agent.test.mjs`, `docs/roadmaps/epics/P1-EPIC-05.md`, `docs/CHANGELOG.md`.
+- Tests and checks: `npm run check`, `node --test tests/endpoint-agent.test.mjs`, `git diff --check`.
+- Migrations: endpoint local migration `endpoint/migrations/0001_endpoint_agent_foundation.sql`; no cloud migration required.
+- Contracts: existing REST provisioning and WebSocket message contracts reused without version change.
+- Documentation: endpoint README, Epic completion record and changelog updated.
+- Known limitations: no adapter host, command execution, configuration activation, update package installation or TouchDesigner lifecycle behaviour; those remain later Epic scope.
+- Recovery/rollback: remove endpoint foundation files and uninstall the local Windows service if installed; no cloud database rollback is required.
+- Referenced ADRs: ADR-001, ADR-002, ADR-003, ADR-004, ADR-005, ADR-011, ADR-012, ADR-019, ADR-021, ADR-023, ADR-026, ADR-031.
 
 ## Epic 7 — Endpoint commands, state, configuration and offline operation
 
