@@ -1137,6 +1137,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1301 — Create clean-environment rebuild test
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-003, ADR-028, ADR-029  
 **Dependencies:** P1-BE-0205, P1-BE-1001
 
@@ -1149,6 +1151,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1302 — Create simulator end-to-end lifecycle test
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011, ADR-025, ADR-026  
 **Dependencies:** P1-BE-0804, P1-BE-0905
 
@@ -1159,6 +1163,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Test covers reconnect without command duplication.
 
 ### P1-BE-1303 — Create Windows endpoint installation acceptance test
+
+**Status:** Complete — P1-EPIC-13
 
 **Relevant ADRs:** ADR-010, ADR-024, ADR-026  
 **Dependencies:** P1-BE-1003, P1-BE-0606
@@ -1172,6 +1178,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1304 — Create TouchDesigner hardware-path abstraction test
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-008, ADR-015, ADR-016, ADR-032  
 **Dependencies:** P1-BE-0807, P1-BE-0905
 
@@ -1182,6 +1190,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Adapter maps command to TouchDesigner locally and reports logical state.
 
 ### P1-BE-1305 — Create network loss and roaming resilience test
+
+**Status:** Complete — P1-EPIC-13
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-004, ADR-026  
 **Dependencies:** P1-BE-0606, P1-BE-0706, P1-BE-0808
@@ -1195,6 +1205,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1306 — Create reboot while offline recovery test
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-004, ADR-012, ADR-026, ADR-027  
 **Dependencies:** P1-BE-0704, P1-BE-0805, P1-BE-1003
 
@@ -1206,6 +1218,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Any recovery action is visible in logs and event history.
 
 ### P1-BE-1307 — Create configuration failure rollback test
+
+**Status:** Complete — P1-EPIC-13
 
 **Relevant ADRs:** ADR-009, ADR-012, ADR-027  
 **Dependencies:** P1-BE-0704, P1-BE-0504
@@ -1219,6 +1233,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1308 — Create update package validation and rollback test
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-003, ADR-010, ADR-027, ADR-029  
 **Dependencies:** P1-BE-1005, P1-BE-1006
 
@@ -1231,6 +1247,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1309 — Create Phase 1 demonstration script
 
+**Status:** Complete — P1-EPIC-13
+
 **Relevant ADRs:** ADR-001, ADR-002, ADR-004, ADR-008, ADR-011, ADR-012, ADR-016, ADR-026  
 **Dependencies:** P1-BE-1302, P1-BE-1303, P1-BE-1304, P1-BE-1305, P1-BE-1306
 
@@ -1239,6 +1257,19 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Script covers install, identity generation, pairing code display, cloud claim, room assignment, configuration push, presentation command, TouchDesigner execution, browser state update, network loss/reconnect and reboot recovery.
 - Script identifies exact expected evidence for each step.
 - Known limitations and rollback/recovery notes are documented.
+
+### P1-EPIC-13 completion evidence
+
+- Completed tasks: P1-BE-1301, P1-BE-1302, P1-BE-1303, P1-BE-1304, P1-BE-1305, P1-BE-1306, P1-BE-1307, P1-BE-1308 and P1-BE-1309.
+- Changed behaviour: the repository now contains an aggregate Phase 1 acceptance and resilience test suite covering clean rebuild, simulator lifecycle, Windows endpoint installation evidence, TouchDesigner abstraction, network loss and roaming, offline reboot recovery, configuration activation rejection/known-good preservation, update package validation/rollback and the Phase 1 demonstration script.
+- Files changed: `tests/e2e-acceptance-resilience.test.mjs`, `docs/operations/PHASE_1_DEMONSTRATION_SCRIPT.md`, `docs/roadmaps/epics/P1-EPIC-13.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+- Migrations added: none; no database schema change was required.
+- Contracts updated: none; existing provisioning, gateway, configuration, package and adapter contracts were reused without public API or WebSocket contract changes.
+- Documentation updated: Phase 1 demonstration script, P1-EPIC-13 record, Engineering Backlog and changelog.
+- Known limitations: tests use in-process Phase 1 components instead of live cloud resources, a real Windows VM or a licensed TouchDesigner runtime; those limitations are documented in the demonstration script.
+- Recovery or rollback notes: revert the P1-EPIC-13 commit to remove the acceptance test suite and demonstration script; no database rollback is required.
+- Referenced ADRs: ADR-001, ADR-002, ADR-003, ADR-004, ADR-008, ADR-009, ADR-010, ADR-011, ADR-012, ADR-015, ADR-016, ADR-024, ADR-025, ADR-026, ADR-027, ADR-028, ADR-029 and ADR-032.
 
 
 ### P1-EPIC-11 completion evidence
