@@ -6,7 +6,7 @@ Cloud-owned Phase 1 implementation files belong here when a scoped task approves
 
 ## Phase 1 status
 
-P1-EPIC-04 adds the repository-local provisioning service implementation for the approved Phase 1 registration, pairing, certificate metadata and room-assignment workflows. P1-EPIC-06 adds the repository-local real-time gateway service implementation for authenticated device WebSocket handshake, presence, browser room sessions, command lifecycle, reported state and health ingestion. P1-EPIC-07 adds partial repository-local configuration service implementation for draft validation, publication, desired configuration fetch and media asset metadata; configuration reporting and release manifests are paused pending Decision Requests. These implementations do not add a deployed server, new inbound port or infrastructure resource.
+P1-EPIC-04 adds the repository-local provisioning service implementation for the approved Phase 1 registration, pairing, certificate metadata and room-assignment workflows. P1-EPIC-06 adds the repository-local real-time gateway service implementation for authenticated device WebSocket handshake, presence, browser room sessions, command lifecycle, reported state and health ingestion. P1-EPIC-07 adds partial repository-local configuration service implementation for draft validation, publication, desired configuration fetch and media asset metadata; configuration reporting and release manifests are paused pending Decision Requests. P1-EPIC-10 adds framework-neutral web application screen view models for the Phase 1 admin, technician, room control, diagnostics and event-log experience. These implementations do not add a deployed server, new inbound port or infrastructure resource.
 
 ## Provisioning implementation
 
@@ -45,6 +45,19 @@ No TouchDesigner operator paths, shell commands, arbitrary file access or generi
 - stores minimal media asset metadata containing asset ID, content hash, storage key, size and cache policy only. Signed or protected media URLs are rejected and must not be logged.
 
 P1-BE-0504 and P1-BE-0506 remain paused by Decision Requests because ADR-009 is In Review and ADR-010 is Proposed.
+
+## Web application screens implementation
+
+`cloud/web-app-screens.mjs` implements the approved Phase 1 browser surfaces as framework-neutral view-model functions so a future web framework can render the same authorised product state without changing the security model:
+
+- admin unclaimed-device queue with limited commissioning metadata, local IP, agent version and duplicate pending-registration clarity;
+- pairing claim flow with code or QR-token entry states, confirmation phrase, successful claim state and explicit expired, reused or unauthorized errors;
+- room assignment view for claimed or assigned devices with current assignment and active configuration revision;
+- device diagnostics view with online/offline status, health, agent and adapter versions, active configuration revision, recent errors and constrained support actions only;
+- room control view using logical capability labels and server-side active-controller authorization state;
+- event log view for pairing, claim, assignment, command, failure and health events using UTC storage timestamps and sanitized display details.
+
+No remote shell, arbitrary file access, TouchDesigner operator path, new public API route or client-side-only authorization boundary is introduced by these screen functions.
 
 ## Build commands
 

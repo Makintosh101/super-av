@@ -149,7 +149,7 @@ function requireCompanyAdminOrTechnician(auth) { if (!isCompanyActor(auth, PHASE
 function isCompanyActor(auth, companyId) { return auth?.companyId === companyId && typeof auth.userId === 'string'; }
 function deviceStatus(device) { if (device.revoked) return 'revoked'; if (device.retired) return 'retired'; if (device.suspended) return 'suspended'; if (device.status === 'assigned') return 'assigned'; if (device.status === 'claimed') return 'claimed'; return 'unclaimed'; }
 function registrationView(registration) { return { registrationId: registration.registrationId, deviceId: registration.deviceId, status: registration.status, bootstrapStatus: 'limited', expiresAt: registration.expiresAt }; }
-function limitedCommissioning(value) { return { reportedHostname: value.reportedHostname, reportedModel: value.reportedModel, shortFingerprint: value.shortFingerprint }; }
+function limitedCommissioning(value) { return { reportedHostname: value.reportedHostname, reportedModel: value.reportedModel, shortFingerprint: value.shortFingerprint, localIp: value.localIp ?? null }; }
 function sha256(value) { return createHash('sha256').update(String(value)).digest('hex'); }
 function hashPairingCode(code) { return `sha256:${sha256(code)}`; }
 function verifyPairingCode(code, storedHash) { const expected = Buffer.from(hashPairingCode(code)); const actual = Buffer.from(storedHash); return expected.length === actual.length && timingSafeEqual(expected, actual); }
