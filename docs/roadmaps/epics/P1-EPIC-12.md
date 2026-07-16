@@ -64,3 +64,26 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## Completion evidence
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-1001 — Add Phase 1 cloud infrastructure module skeleton.
+- P1-BE-1002 — Add environment configuration contract.
+- P1-BE-1003 — Build endpoint installer package.
+- P1-BE-1004 — Build TouchDesigner project package manifest.
+- P1-BE-1005 — Implement package validation on endpoint.
+- P1-BE-1006 — Add release and rollback documentation.
+
+Changed behaviour: the repository now contains code-owned Phase 1 deployment skeletons, environment configuration validation, endpoint installer metadata, TouchDesigner package manifests, endpoint package validation and documented rollback operating procedures.
+
+Tests and checks: `npm test` passed. `git diff --check` passed.
+
+Migrations: none; no database schema change was required.
+
+Contracts: environment configuration contract added; no public API or WebSocket contract change was required.
+
+Review Gate: reached; do not begin P1-EPIC-13 until P1-EPIC-12 Review Gate approval is complete.

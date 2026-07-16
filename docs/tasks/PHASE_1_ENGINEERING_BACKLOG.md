@@ -920,6 +920,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1001 — Add Phase 1 cloud infrastructure module skeleton
 
+**Status:** Complete — P1-EPIC-12
+
 **Relevant ADRs:** ADR-003, ADR-028, ADR-029  
 **Dependencies:** P1-BE-0001
 
@@ -931,6 +933,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1002 — Add environment configuration contract
 
+**Status:** Complete — P1-EPIC-12
+
 **Relevant ADRs:** ADR-003, ADR-028, ADR-029  
 **Dependencies:** P1-BE-1001
 
@@ -941,6 +945,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Document how future client environments would reuse the same modules without copying and editing the project.
 
 ### P1-BE-1003 — Build endpoint installer package
+
+**Status:** Complete — P1-EPIC-12
 
 **Relevant ADRs:** ADR-003, ADR-010, ADR-024, ADR-026, ADR-029  
 **Dependencies:** P1-BE-0601, P1-BE-0603
@@ -954,6 +960,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1004 — Build TouchDesigner project package manifest
 
+**Status:** Complete — P1-EPIC-12
+
 **Relevant ADRs:** ADR-010, ADR-020, ADR-024, ADR-026  
 **Dependencies:** P1-BE-0506, P1-BE-0805
 
@@ -964,6 +972,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Package can be validated by the endpoint before launch.
 
 ### P1-BE-1005 — Implement package validation on endpoint
+
+**Status:** Complete — P1-EPIC-12
 
 **Relevant ADRs:** ADR-002, ADR-003, ADR-010, ADR-026  
 **Dependencies:** P1-BE-0506, P1-BE-1003, P1-BE-1004
@@ -976,6 +986,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1006 — Add release and rollback documentation
 
+**Status:** Complete — P1-EPIC-12
+
 **Relevant ADRs:** ADR-003, ADR-010, ADR-027, ADR-029  
 **Dependencies:** P1-BE-1005
 
@@ -984,6 +996,20 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Document release creation, deployment rings, activation, failure handling and rollback target selection.
 - Rollback is a documented operating mode with trigger, owner, test plan and failure behaviour.
 - Documentation includes recovery notes for endpoint, adapter and project package failures.
+
+
+### P1-EPIC-12 completion evidence
+
+- Completed tasks: P1-BE-1001, P1-BE-1002, P1-BE-1003, P1-BE-1004, P1-BE-1005 and P1-BE-1006.
+- Changed behaviour: Phase 1 now has code-owned deployment module skeletons, an environment configuration contract, endpoint installer manifest, TouchDesigner project package manifest, endpoint package hash/signature validation with current/previous rollback preservation and release/rollback operating documentation.
+- Files changed: `deployment/infrastructure/phase1-blue-elephant.mjs`, `deployment/contracts/environment-contract.mjs`, `endpoint/packaging/installer-manifest.mjs`, `endpoint/agent/package-validator.mjs`, `endpoint/agent/errors.mjs`, `touchdesigner/packages/phase1-project-manifest.mjs`, `tests/packaging-deployment.test.mjs`, `deployment/README.md`, `endpoint/README.md`, `touchdesigner/README.md`, `docs/operations/RELEASE_AND_ROLLBACK.md`, `docs/roadmaps/epics/P1-EPIC-12.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+- Migrations added: none; no database schema change was required.
+- Contracts updated: environment configuration contract added; no public API or WebSocket contract changes were required.
+- Documentation updated: deployment README, endpoint README, TouchDesigner README, release/rollback procedure, P1-EPIC-12 record, Engineering Backlog and changelog.
+- Known limitations: the infrastructure module is a Phase 1 skeleton and does not provision live cloud resources in this repository; the endpoint installer manifest is code-owned packaging metadata, not a compiled MSI; package signature validation uses configured public keys and does not introduce a release approval service.
+- Recovery or rollback notes: revert the P1-EPIC-12 commit to remove packaging/deployment changes; no database rollback is required. Package activation preserves previous package files for endpoint rollback.
+- Referenced ADRs: ADR-002, ADR-003, ADR-010, ADR-020, ADR-024, ADR-026, ADR-027, ADR-028 and ADR-029.
 
 ## Epic 11 — Monitoring, diagnostics and support
 
