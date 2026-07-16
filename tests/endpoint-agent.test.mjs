@@ -146,3 +146,40 @@ test('offline control boundary permits cached User and Technician actions only',
   const draft = await boundary.createDraftProgramming({ actorRole: 'Technician', draft: { name: 'Preset draft' } });
   assert.equal(draft.requiresCloudReview, true);
 });
+
+import { writeFile, mkdir } from 'node:fs/promises';
+import { StructuredLogger } from '../endpoint/agent/logger.mjs';
+import { exportDiagnosticBundle } from '../endpoint/agent/diagnostic-bundle.mjs';
+
+test('endpoint structured logger includes required fields and redacts secrets', () => {
+  const lines = [];
+  const logger = new StructuredLogger({ sink: (line) => lines.push(JSON.parse(line)), now: () => new Date('2026-07-15T00:00:00Z') });
+  logger.error('Command failed.', { correlationId: 'corr_1', deviceId: 'dev_1', commandId: 'cmd_1', errorCode: 'NODE-COMMAND-1006', privateKey: 'secret', nested: { token: 'secret' } });
+  assert.equal(lines[0].timestamp, '2026-07-15T00:00:00.000Z');
+  assert.equal(lines[0].correlationId, 'corr_1');
+  assert.equal(lines[0].privateKey, '[REDACTED]');
+  assert.equal(lines[0].nested.token, '[REDACTED]');
+});
+
+test('diagnostic bundle exports support evidence without secrets', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'endpoint-diagnostics-'));
+  const logsDirectory = join(directory, 'logs');
+  await mkdir(logsDirectory);
+  await writeFile(join(logsDirectory, 'agent.log'), JSON.stringify({ token: 'secret', message: 'failed' }));
+  const outputPath = join(directory, 'bundle.json');
+  const result = await exportDiagnosticBundle({
+    outputPath,
+    logsDirectory,
+    configurationSummary: { activeRevision: 7, signedUrl: 'secret' },
+    versions: { agent: '1.0.0' },
+    recentHealth: [{ status: 'degraded', privateKey: 'secret' }],
+    recentCommands: [{ commandId: 'cmd_1', status: 'failed' }],
+    environmentSummary: { disk: 'ok', password: 'secret' },
+    now: () => new Date('2026-07-15T00:00:00Z')
+  });
+  assert.equal(result.sensitiveValuesRedacted, true);
+  const bundle = JSON.parse(await readFile(outputPath, 'utf8'));
+  assert.equal(bundle.configurationSummary.signedUrl, '[REDACTED]');
+  assert.equal(bundle.environmentSummary.password, '[REDACTED]');
+  assert.equal(bundle.logs[0].file, 'agent.log');
+});

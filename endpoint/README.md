@@ -9,7 +9,7 @@ Endpoint agent, commissioning, adapter SDK, adapter and installer implementation
 P1-EPIC-09 extends the BE Endpoint Node Agent foundation with the internal adapter host, System Health adapter, deterministic simulator and TouchDesigner adapter runtime boundary. P1-EPIC-08 previously added endpoint command, configuration, state, event and offline-control behaviour. The implementation remains intentionally small and covers the approved Phase 1 endpoint execution scope:
 
 - Windows service skeleton scripts for installing and removing the service.
-- Structured startup and shutdown logging.
+- Structured startup and shutdown logging with UTC timestamp, correlation ID, device/command context, error code and sensitive-field redaction.
 - Ordered local SQLite schema migration file for endpoint persistence.
 - Device identity generation with persisted metadata and protected private-key file permissions where the host supports them.
 - Provisioning client for unclaimed registration and registration-status polling over outbound HTTPS.
@@ -27,6 +27,7 @@ P1-EPIC-09 extends the BE Endpoint Node Agent foundation with the internal adapt
 - System Health adapter reporting CPU, memory, disk, GPU availability, agent version, adapter version and recent errors, including low-disk alerts.
 - Simulated TouchDesigner adapter implementing all Phase 1 logical commands with deterministic state changes for integration tests.
 - TouchDesigner adapter with configured project launch, localhost-only bridge validation, protocol/message-size checks, command mapping, heartbeat detection and documented bounded restart policy.
+- Diagnostic bundle export that writes redacted support evidence from logs, local configuration summary, component versions, recent health, recent commands and environment summary.
 
 ## Scope boundaries
 
@@ -87,3 +88,9 @@ The adapter host is internal to the endpoint agent. It is not a public plugin ma
 TouchDesigner licensing is a deployment prerequisite. The runtime requires an executable path, assigned project path and expected project version from active configuration/release metadata; it does not hide licensing failure behind alternate launch behaviour. The localhost bridge accepts only `localhost`, `127.0.0.1` or `::1`, validates the expected protocol version and rejects oversized messages.
 
 The TouchDesigner restart policy is an explicit recovery mode: when the project heartbeat exceeds the configured timeout, the adapter performs a bounded restart inside the configured restart window. If the restart limit is reached, the adapter reports degraded health instead of entering an endless restart loop.
+
+## Diagnostic bundle export
+
+`endpoint/agent/diagnostic-bundle.mjs` exports a Phase 1 diagnostic bundle as a local JSON artifact. The bundle includes logs, local configuration summary, versions, recent health, recent commands and environment summary. The exporter redacts sensitive fields such as private keys, tokens, passwords, secrets and signed/protected URLs before writing the bundle.
+
+Diagnostic bundle export is available as local implementation logic and through the constrained local diagnostics export trigger. It does not add remote shell, arbitrary file access, a new inbound network binding or a deployed upload service.
