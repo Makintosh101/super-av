@@ -1142,6 +1142,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-003, ADR-028, ADR-029  
 **Dependencies:** P1-BE-0205, P1-BE-1001
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Test creates a clean database using migrations only.
@@ -1156,6 +1158,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011, ADR-025, ADR-026  
 **Dependencies:** P1-BE-0804, P1-BE-0905
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Simulator installs/starts, registers, pairs, claims, assigns to room, receives configuration, executes command and reports state.
@@ -1168,6 +1172,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-010, ADR-024, ADR-026  
 **Dependencies:** P1-BE-1003, P1-BE-0606
+
+**Status:** Complete — P1-EPIC-13
 
 **Acceptance criteria:**
 
@@ -1183,6 +1189,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-008, ADR-015, ADR-016, ADR-032  
 **Dependencies:** P1-BE-0807, P1-BE-0905
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Browser sends logical command such as `video.output.selectSource`.
@@ -1195,6 +1203,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-004, ADR-026  
 **Dependencies:** P1-BE-0606, P1-BE-0706, P1-BE-0808
+
+**Status:** Complete — P1-EPIC-13
 
 **Acceptance criteria:**
 
@@ -1210,6 +1220,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-004, ADR-012, ADR-026, ADR-027  
 **Dependencies:** P1-BE-0704, P1-BE-0805, P1-BE-1003
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Endpoint reboots while cloud is unavailable.
@@ -1223,6 +1235,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 **Relevant ADRs:** ADR-009, ADR-012, ADR-027  
 **Dependencies:** P1-BE-0704, P1-BE-0504
+
+**Status:** Complete — P1-EPIC-13
 
 **Acceptance criteria:**
 
@@ -1238,6 +1252,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-003, ADR-010, ADR-027, ADR-029  
 **Dependencies:** P1-BE-1005, P1-BE-1006
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Valid package hash/signature passes.
@@ -1252,6 +1268,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 **Relevant ADRs:** ADR-001, ADR-002, ADR-004, ADR-008, ADR-011, ADR-012, ADR-016, ADR-026  
 **Dependencies:** P1-BE-1302, P1-BE-1303, P1-BE-1304, P1-BE-1305, P1-BE-1306
 
+**Status:** Complete — P1-EPIC-13
+
 **Acceptance criteria:**
 
 - Script covers install, identity generation, pairing code display, cloud claim, room assignment, configuration push, presentation command, TouchDesigner execution, browser state update, network loss/reconnect and reboot recovery.
@@ -1261,6 +1279,16 @@ The backlog must not be used to introduce architecture beyond documented decisio
 ### P1-EPIC-13 completion evidence
 
 - Completed tasks: P1-BE-1301, P1-BE-1302, P1-BE-1303, P1-BE-1304, P1-BE-1305, P1-BE-1306, P1-BE-1307, P1-BE-1308 and P1-BE-1309.
+<<<<<<< HEAD
+- Changed behaviour: Phase 1 now has repository-owned acceptance coverage for clean rebuild evidence, simulator lifecycle, Windows endpoint installation evidence, TouchDesigner hardware-path abstraction, network loss and roaming resilience, offline reboot recovery, configuration failure rollback, package validation/rollback and the Phase 1 demonstration script. Configuration validation failures now persist desired and failed revision evidence while preserving the previous active revision.
+- Files changed: `endpoint/agent/configuration-manager.mjs`, `tests/phase1-acceptance.test.mjs`, `docs/operations/PHASE_1_DEMONSTRATION.md`, `docs/roadmaps/epics/P1-EPIC-13.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+- Migrations added: none; no database schema change was required. Clean rebuild evidence uses existing ordered migrations and code-owned seed data.
+- Contracts updated: none; existing provisioning, gateway, configuration, diagnostics, package and command contracts were reused without public API changes.
+- Documentation updated: Phase 1 demonstration script, P1-EPIC-13 record, Engineering Backlog and changelog.
+- Known limitations: repository acceptance tests use deterministic simulator and manifest-level evidence for Windows image, infrastructure deployment and TouchDesigner hardware behaviours; they do not provision live cloud infrastructure or boot a real Windows VM in this repository.
+- Recovery or rollback notes: revert the P1-EPIC-13 commit to remove acceptance tests, demonstration documentation and configuration-failure reporting changes; no database rollback is required. Failed configuration activation keeps the previous known-good revision active.
+=======
 - Changed behaviour: the repository now contains an aggregate Phase 1 acceptance and resilience test suite covering clean rebuild, simulator lifecycle, Windows endpoint installation evidence, TouchDesigner abstraction, network loss and roaming, offline reboot recovery, configuration activation rejection/known-good preservation, update package validation/rollback and the Phase 1 demonstration script.
 - Files changed: `tests/e2e-acceptance-resilience.test.mjs`, `docs/operations/PHASE_1_DEMONSTRATION_SCRIPT.md`, `docs/roadmaps/epics/P1-EPIC-13.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
 - Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
@@ -1269,6 +1297,7 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Documentation updated: Phase 1 demonstration script, P1-EPIC-13 record, Engineering Backlog and changelog.
 - Known limitations: tests use in-process Phase 1 components instead of live cloud resources, a real Windows VM or a licensed TouchDesigner runtime; those limitations are documented in the demonstration script.
 - Recovery or rollback notes: revert the P1-EPIC-13 commit to remove the acceptance test suite and demonstration script; no database rollback is required.
+>>>>>>> origin/main
 - Referenced ADRs: ADR-001, ADR-002, ADR-003, ADR-004, ADR-008, ADR-009, ADR-010, ADR-011, ADR-012, ADR-015, ADR-016, ADR-024, ADR-025, ADR-026, ADR-027, ADR-028, ADR-029 and ADR-032.
 
 

@@ -78,3 +78,11 @@ Completed P1-EPIC-09 endpoint adapter scope. Added the internal adapter contract
 - Added gateway offline and low-disk alert records surfaced through diagnostics/event-log state.
 - Added Phase 1 security regression coverage for user/device authentication separation, tenant ownership checks, command allow-list rejection, localhost local API exposure and certificate revocation/rotation.
 - Migrations: none. Contracts: none. Infrastructure: none.
+
+
+## 2026-07-16 — P1-EPIC-13 — End-to-End Acceptance, Resilience and Operational Readiness
+
+- Added repository-owned Phase 1 acceptance coverage for clean rebuild evidence, simulator lifecycle, Windows endpoint installation evidence, TouchDesigner hardware-path abstraction, network loss/roaming resilience, offline reboot recovery, configuration failure rollback, update package validation/rollback and the Phase 1 demonstration script.
+- Updated configuration activation failure handling so rejected desired revisions are persisted and reported distinctly from the previous known-good active revision.
+- Added the Phase 1 demonstration script with expected evidence, limitations and rollback/recovery notes.
+- Migrations: none. Contracts: none. Infrastructure: none.

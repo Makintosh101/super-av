@@ -84,6 +84,19 @@ flowchart TD
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
 
+<<<<<<< HEAD
+
+## Completion evidence
+
+- Completed tasks: P1-BE-1301 through P1-BE-1309.
+- Deliverables: repository acceptance suite in `tests/phase1-acceptance.test.mjs`, Phase 1 demonstration script in `docs/operations/PHASE_1_DEMONSTRATION.md`, and explicit configuration failure revision reporting in `endpoint/agent/configuration-manager.mjs`.
+- Validation: `npm test` and `git diff --check` passed locally.
+- Migrations: none.
+- Contracts: none changed.
+- Infrastructure: none changed; tests validate existing code-owned Phase 1 infrastructure definition.
+- Known limitations: live cloud provisioning and real Windows VM execution remain external environment validation activities; repository tests preserve deterministic acceptance evidence without adding new architecture.
+- Review Gate: reached; do not begin any following Epic from this task.
+=======
 ## Completion record
 
 Status: Complete pending Review Gate approval.
@@ -109,3 +122,4 @@ Migrations: none; no database schema change was required.
 Contracts: none; existing contracts were reused without public API or WebSocket changes.
 
 Review Gate: reached; do not begin any following Epic or future-phase work until P1-EPIC-13 Review Gate approval is complete.
+>>>>>>> origin/main
