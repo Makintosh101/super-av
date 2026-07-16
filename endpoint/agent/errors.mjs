@@ -24,7 +24,8 @@ export const ERROR_CODES = {
   configurationActivationFailed: 'NODE-CONFIGURATION-1002',
   statePublishFailed: 'NODE-STATE-1001',
   staleReportedState: 'NODE-STATE-1002',
-  eventUploadFailed: 'NODE-EVENT-1001'
+  eventUploadFailed: 'NODE-EVENT-1001',
+  diagnosticBundleFailed: 'NODE-DIAGNOSTICS-1001'
 };
 Object.assign(ERROR_CODES, {
   adapterContractInvalid: 'NODE-ADAPTER-1001',

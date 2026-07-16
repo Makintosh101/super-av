@@ -6,7 +6,7 @@ Cloud-owned Phase 1 implementation files belong here when a scoped task approves
 
 ## Phase 1 status
 
-P1-EPIC-04 adds the repository-local provisioning service implementation for the approved Phase 1 registration, pairing, certificate metadata and room-assignment workflows. P1-EPIC-06 adds the repository-local real-time gateway service implementation for authenticated device WebSocket handshake, presence, browser room sessions, command lifecycle, reported state and health ingestion. P1-EPIC-07 adds partial repository-local configuration service implementation for draft validation, publication, desired configuration fetch and media asset metadata; configuration reporting and release manifests are paused pending Decision Requests. P1-EPIC-10 adds framework-neutral web application screen view models for the Phase 1 admin, technician, room control, diagnostics and event-log experience. These implementations do not add a deployed server, new inbound port or infrastructure resource.
+P1-EPIC-04 adds the repository-local provisioning service implementation for the approved Phase 1 registration, pairing, certificate metadata and room-assignment workflows. P1-EPIC-06 adds the repository-local real-time gateway service implementation for authenticated device WebSocket handshake, presence, browser room sessions, command lifecycle, reported state and health ingestion. P1-EPIC-07 adds partial repository-local configuration service implementation for draft validation, publication, desired configuration fetch and media asset metadata; configuration reporting and release manifests are paused pending Decision Requests. P1-EPIC-10 adds framework-neutral web application screen view models for the Phase 1 admin, technician, room control, diagnostics and event-log experience. P1-EPIC-11 adds cloud structured logging and explicit offline/low-disk alert records for monitoring and support evidence. These implementations do not add a deployed server, new inbound port or infrastructure resource.
 
 ## Provisioning implementation
 
@@ -30,7 +30,8 @@ P1-EPIC-04 adds the repository-local provisioning service implementation for the
 - command creation validates ownership, active session, logical Phase 1 capability, value ranges, configuration revision, expiry and idempotency before delivery;
 - command acknowledgement and completion are tracked independently, broadcast to subscribed browsers and audited;
 - reported state ingestion enforces monotonically increasing revisions;
-- health ingestion validates issue codes, severity and first-observed timestamps and records Phase 1 retention metadata.
+- health ingestion validates issue codes, severity and first-observed timestamps and records Phase 1 retention metadata;
+- missed heartbeat thresholds raise explicit offline alerts, and low disk metrics raise explicit disk-capacity alerts visible to diagnostics and event-log surfaces.
 
 No TouchDesigner operator paths, shell commands, arbitrary file access or generic process-launch actions are accepted by the gateway implementation.
 
@@ -82,3 +83,9 @@ npm run check
 - [Phase 1 Build Plan](../docs/10_PHASE_1_BUILD_PLAN.md)
 - [Cloud Backend Specification](../docs/specifications/05_CLOUD_BACKEND_SPECIFICATION.md)
 - [API and Message Contracts](../docs/specifications/06_API_AND_MESSAGE_CONTRACTS.md)
+
+## Monitoring and support implementation
+
+`cloud/structured-logger.mjs` provides a framework-neutral structured logger for cloud services. Log records include UTC timestamp, component, correlation ID, actor/device context and error code where supplied. Sensitive fields such as passwords, private keys, tokens, secrets and signed URLs are redacted before writing.
+
+Gateway alert records are in-memory Phase 1 implementation state only. They do not introduce a deployed alerting backend, notification channel, infrastructure resource or public API route.

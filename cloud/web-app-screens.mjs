@@ -88,6 +88,7 @@ export function createPhase1WebAppScreens({ provisioningService, gatewayService,
     const device = ownedDevice(deviceId, auth);
     const gatewayDevice = gatewayService._state.devices.get(deviceId);
     const recentHealth = [...gatewayService._state.healthEvents.values()].filter((event) => event.deviceId === deviceId).at(-1) ?? null;
+    const activeAlerts = [...(gatewayService._state.alerts?.values?.() ?? gatewayService._state.alerts ?? [])].filter((alert) => alert.deviceId === deviceId && alert.status === 'active');
     const recentErrors = [...gatewayService._state.healthEvents.values()].filter((event) => event.deviceId === deviceId).flatMap((event) => event.issues ?? []).filter((issue) => ['Error', 'Critical'].includes(issue.severity)).slice(-5);
     const supportAction = requestedSupportAction ? evaluateSupportAction(requestedSupportAction) : null;
     return screen('device.detailDiagnostics', auth, {
@@ -99,6 +100,7 @@ export function createPhase1WebAppScreens({ provisioningService, gatewayService,
       activePreset: gatewayService._state.reportedStates.get(deviceId)?.state?.activePreset ?? null,
       activeConfigurationRevision: gatewayDevice?.desiredConfigurationRevision ?? null,
       recentErrors,
+      activeAlerts,
       supportActions: ['diagnostic.bundle.export', 'system.restart'],
       requestedSupportAction: supportAction,
       remoteShellAvailable: false,

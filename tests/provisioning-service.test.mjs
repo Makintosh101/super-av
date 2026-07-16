@@ -92,3 +92,13 @@ test('rejects endpoint private keys and suspended credential issuance', () => {
   service._state.devices.get(deviceInput.deviceId).suspended = true;
   assert.throws(() => service.issueCertificateRecord(deviceInput.deviceId), (error) => error.code === 'AUTH-3001');
 });
+
+test('tenant and ownership checks reject cross-company assignment and suspended revoked credentials', () => {
+  const service = createProvisioningService();
+  service.registerDevice(deviceInput);
+  const session = service.createPairingSession({ deviceId: deviceInput.deviceId });
+  service.claimPairingSession(session.code, admin);
+  assert.throws(() => service.assignRoom({ deviceId: deviceInput.deviceId }, { userId: 'other', companyId: 'other-company', role: 'admin' }), (error) => error.code === 'AUTH-3001');
+  service._state.devices.get(deviceInput.deviceId).revoked = true;
+  assert.throws(() => service.issueCertificateRecord(deviceInput.deviceId), (error) => error.code === 'AUTH-3001');
+});

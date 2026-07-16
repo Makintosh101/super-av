@@ -14,6 +14,7 @@ const ALLOWED_ACTIONS = new Set([
 const CONTROLLER_PRIORITY = { user: 1, technician: 2, admin: 3 };
 const VALID_SEVERITIES = new Set(['Info', 'Warning', 'Error', 'Critical']);
 const VALID_HEALTH = new Set(['healthy', 'degraded', 'offline']);
+const DEFAULT_LOW_DISK_THRESHOLD_BYTES = 10 * 1024 * 1024 * 1024;
 
 export class GatewayError extends Error {
   constructor(code, message, details = {}) {
@@ -24,7 +25,7 @@ export class GatewayError extends Error {
   }
 }
 
-export function createGatewayService({ now = () => new Date(), heartbeatIntervalSeconds = HEARTBEAT_INTERVAL_SECONDS } = {}) {
+export function createGatewayService({ now = () => new Date(), heartbeatIntervalSeconds = HEARTBEAT_INTERVAL_SECONDS, lowDiskThresholdBytes = DEFAULT_LOW_DISK_THRESHOLD_BYTES } = {}) {
   const devices = new Map();
   const rooms = new Map();
   const deviceConnections = new Map();
@@ -36,6 +37,7 @@ export function createGatewayService({ now = () => new Date(), heartbeatInterval
   const auditEvents = [];
   const outboundMessages = [];
   const browserBroadcasts = [];
+  const alerts = [];
 
   function registerAssignedDevice(device) {
     requireFields(device, ['deviceId', 'companyId', 'roomId', 'credentialThumbprint']);
@@ -93,6 +95,7 @@ export function createGatewayService({ now = () => new Date(), heartbeatInterval
       if (connection.online && now() - new Date(connection.lastHeartbeatAt) > staleMs) {
         connection.online = false;
         setPresence(connection.deviceId, 'offline', 'device.heartbeat_lost');
+        raiseAlert(connection.deviceId, 'device.offline', 'Error', 'HEALTH-DEVICE-OFFLINE', 'Device missed the heartbeat threshold.');
       }
     }
   }
@@ -174,8 +177,10 @@ export function createGatewayService({ now = () => new Date(), heartbeatInterval
     if (!VALID_HEALTH.has(message.status)) throw new GatewayError('HEALTH-7002', 'Health status is not valid.');
     for (const issue of message.issues ?? []) if (!VALID_SEVERITIES.has(issue.severity) || !issue.code || !issue.firstObservedAt) throw new GatewayError('HEALTH-7002', 'Health issue requires code, valid severity and first observed time.');
     const device = devices.get(message.deviceId);
-    const record = { deviceId: message.deviceId, roomId: device.roomId, status: message.status, issues: message.issues ?? [], observedAt: now().toISOString(), retention: { detailedTelemetryDays: 30, aggregatedMetricsMonths: 12 } };
+    const record = { deviceId: message.deviceId, roomId: device.roomId, status: message.status, issues: message.issues ?? [], metrics: message.metrics ?? {}, observedAt: now().toISOString(), retention: { detailedTelemetryDays: 30, aggregatedMetricsMonths: 12 } };
     healthEvents.push(record);
+    const freeBytes = message.metrics?.diskFreeBytes;
+    if (typeof freeBytes === 'number' && freeBytes < lowDiskThresholdBytes) raiseAlert(message.deviceId, 'device.disk_low', 'Warning', 'HEALTH-DISK-LOW', 'Device disk capacity is below the Phase 1 safety threshold.', { diskFreeBytes: freeBytes, thresholdBytes: lowDiskThresholdBytes });
     broadcast(device.roomId, 'device.healthChanged', record);
     return record;
   }
@@ -224,11 +229,20 @@ export function createGatewayService({ now = () => new Date(), heartbeatInterval
     browserBroadcasts.push({ roomId, type, payload, sentAt: now().toISOString() });
   }
 
+  function raiseAlert(deviceId, alertType, severity, code, message, details = {}) {
+    const device = devices.get(deviceId);
+    const alert = { alertType, deviceId, roomId: device?.roomId ?? null, severity, code, message, details, observedAt: now().toISOString(), status: 'active' };
+    alerts.push(alert);
+    healthEvents.push({ deviceId, roomId: alert.roomId, status: alertType === 'device.offline' ? 'offline' : 'degraded', issues: [{ code, severity, firstObservedAt: alert.observedAt, message }], observedAt: alert.observedAt, eventType: alertType });
+    if (alert.roomId) broadcast(alert.roomId, 'device.alertRaised', alert);
+    return alert;
+  }
+
   function audit(eventType, auth, targetType, targetId, details) { auditEvents.push({ eventType, actorUserId: auth?.userId ?? null, companyId: auth?.companyId ?? null, targetType, targetId, details, occurredAt: now().toISOString() }); }
   function devicesForRoom(roomId) { return [...devices.values()].filter((device) => device.roomId === roomId); }
   function presenceView(deviceId) { const device = devices.get(deviceId); return { deviceId, roomId: device.roomId, status: device.presence?.status ?? 'offline', updatedAt: device.presence?.updatedAt ?? null }; }
 
-  return { registerAssignedDevice, connectDevice, receiveHeartbeat, evaluatePresence, subscribeBrowser, takeControl, createCommand, deliverCommand, acknowledgeCommand, completeCommand, ingestState, ingestHealth, _state: { devices, rooms, deviceConnections, browserSessions, commands, reportedStates, healthEvents, auditEvents, outboundMessages, browserBroadcasts } };
+  return { registerAssignedDevice, connectDevice, receiveHeartbeat, evaluatePresence, subscribeBrowser, takeControl, createCommand, deliverCommand, acknowledgeCommand, completeCommand, ingestState, ingestHealth, _state: { devices, rooms, deviceConnections, browserSessions, commands, reportedStates, healthEvents, auditEvents, outboundMessages, browserBroadcasts, alerts } };
 }
 
 function requireFields(input, fields) { for (const field of fields) if (!input?.[field]) throw new GatewayError('GATEWAY-4002', `Missing required field: ${field}.`); }

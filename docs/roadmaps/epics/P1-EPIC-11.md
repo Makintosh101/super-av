@@ -76,3 +76,39 @@ flowchart TD
 - Any proposed or in-review ADR dependency is handled by a Decision Request before implementation.
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
+
+## Completion evidence
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-1101 — Implement structured logging standard in cloud services.
+- P1-BE-1102 — Implement structured logging standard in endpoint agent.
+- P1-BE-1103 — Implement diagnostic bundle export.
+- P1-BE-1104 — Implement offline and disk-space alerts.
+- P1-BE-1201 — Implement user/device authentication separation tests.
+- P1-BE-1202 — Implement tenant and ownership authorisation tests.
+- P1-BE-1203 — Implement command allow-list security tests.
+- P1-BE-1204 — Implement local API exposure tests.
+- P1-BE-1205 — Implement certificate revocation and rotation tests.
+
+Changed behaviour: cloud and endpoint structured logging now preserve UTC timestamps, correlation IDs, actor/device or command context and explicit error codes while redacting secrets. Endpoint diagnostic bundle export writes redacted support evidence from logs, configuration summary, versions, recent health, recent commands and environment summary. Gateway monitoring raises explicit offline and low-disk alerts that are available to device diagnostics and event-log surfaces. Security regression tests cover user/device authentication separation, tenant and ownership checks, command allow-list rejection, localhost local API exposure and certificate revocation/rotation.
+
+Files changed: `cloud/structured-logger.mjs`, `cloud/gateway/gateway-service.mjs`, `cloud/web-app-screens.mjs`, `endpoint/agent/logger.mjs`, `endpoint/agent/diagnostic-bundle.mjs`, `endpoint/agent/errors.mjs`, `tests/cloud-logging.test.mjs`, `tests/endpoint-agent.test.mjs`, `tests/gateway-service.test.mjs`, `tests/provisioning-service.test.mjs`, `cloud/README.md`, `endpoint/README.md`, `docs/roadmaps/epics/P1-EPIC-11.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+
+Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+
+Migrations: none; no cloud or endpoint schema change was required.
+
+Contracts: none; existing contracts were reused without public API changes.
+
+Documentation: cloud README, endpoint README, P1-EPIC-11 record, Engineering Backlog and changelog were updated.
+
+Known limitations: no deployed centralized log sink, alert notification channel, browser framework, unrestricted support tool, infrastructure resource or new public API route is introduced by this Epic.
+
+Recovery/rollback: revert the P1-EPIC-11 commit; no database rollback is required.
+
+Referenced ADRs: ADR-001, ADR-002, ADR-004, ADR-005, ADR-008, ADR-011, ADR-015, ADR-019, ADR-021, ADR-022, ADR-023, ADR-026 and ADR-028.
+
+Review Gate: reached; do not begin P1-EPIC-12 until P1-EPIC-11 Review Gate approval is complete.

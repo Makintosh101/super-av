@@ -989,6 +989,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1101 — Implement structured logging standard in cloud services
 
+**Status:** Complete — P1-EPIC-11
+
 **Relevant ADRs:** ADR-019, ADR-021, ADR-022, ADR-023  
 **Dependencies:** P1-BE-0106
 
@@ -999,6 +1001,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Failed operations remain failed in logs and API responses.
 
 ### P1-BE-1102 — Implement structured logging standard in endpoint agent
+
+**Status:** Complete — P1-EPIC-11
 
 **Relevant ADRs:** ADR-019, ADR-021, ADR-022, ADR-023  
 **Dependencies:** P1-BE-0601, P1-BE-0106
@@ -1011,6 +1015,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1103 — Implement diagnostic bundle export
 
+**Status:** Complete — P1-EPIC-11
+
 **Relevant ADRs:** ADR-021, ADR-022, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0607, P1-BE-1102
 
@@ -1021,6 +1027,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Bundle can be triggered locally and by a constrained cloud support action.
 
 ### P1-BE-1104 — Implement offline and disk-space alerts
+
+**Status:** Complete — P1-EPIC-11
 
 **Relevant ADRs:** ADR-021, ADR-022, ADR-026  
 **Dependencies:** P1-BE-0402, P1-BE-0803
@@ -1035,6 +1043,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1201 — Implement user/device authentication separation tests
 
+**Status:** Complete — P1-EPIC-11
+
 **Relevant ADRs:** ADR-002, ADR-011, ADR-028  
 **Dependencies:** P1-BE-0305, P1-BE-0401
 
@@ -1045,6 +1055,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Suspended, retired and revoked devices cannot connect.
 
 ### P1-BE-1202 — Implement tenant and ownership authorisation tests
+
+**Status:** Complete — P1-EPIC-11
 
 **Relevant ADRs:** ADR-008, ADR-011, ADR-028  
 **Dependencies:** P1-BE-0306, P1-BE-0404
@@ -1057,6 +1069,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1203 — Implement command allow-list security tests
 
+**Status:** Complete — P1-EPIC-11
+
 **Relevant ADRs:** ADR-008, ADR-015, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0404, P1-BE-0701
 
@@ -1068,6 +1082,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-1204 — Implement local API exposure tests
 
+**Status:** Complete — P1-EPIC-11
+
 **Relevant ADRs:** ADR-004, ADR-005, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0607
 
@@ -1078,6 +1094,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Local API does not expose permanent secrets or arbitrary command execution.
 
 ### P1-BE-1205 — Implement certificate revocation and rotation tests
+
+**Status:** Complete — P1-EPIC-11
 
 **Relevant ADRs:** ADR-001, ADR-002, ADR-011  
 **Dependencies:** P1-BE-0305, P1-BE-0401, P1-BE-0606
@@ -1195,6 +1213,20 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Script covers install, identity generation, pairing code display, cloud claim, room assignment, configuration push, presentation command, TouchDesigner execution, browser state update, network loss/reconnect and reboot recovery.
 - Script identifies exact expected evidence for each step.
 - Known limitations and rollback/recovery notes are documented.
+
+
+### P1-EPIC-11 completion evidence
+
+- Completed tasks: P1-BE-1101, P1-BE-1102, P1-BE-1103, P1-BE-1104, P1-BE-1201, P1-BE-1202, P1-BE-1203, P1-BE-1204 and P1-BE-1205.
+- Changed behaviour: cloud and endpoint structured logging now include UTC timestamps, correlation/device/actor or command context and redaction for sensitive fields; endpoint diagnostic bundle export collects logs, configuration summary, versions, recent health, recent commands and environment summary with redaction; gateway health handling raises explicit offline and low-disk alerts visible to diagnostics/event surfaces; Phase 1 security boundaries are covered by tests for user/device authentication separation, tenant and ownership checks, command allow-list rejection, local API localhost/authentication behaviour and certificate revocation/rotation.
+- Files changed: `cloud/structured-logger.mjs`, `cloud/gateway/gateway-service.mjs`, `cloud/web-app-screens.mjs`, `endpoint/agent/logger.mjs`, `endpoint/agent/diagnostic-bundle.mjs`, `endpoint/agent/errors.mjs`, `tests/cloud-logging.test.mjs`, `tests/endpoint-agent.test.mjs`, `tests/gateway-service.test.mjs`, `tests/provisioning-service.test.mjs`, `cloud/README.md`, `endpoint/README.md`, `docs/roadmaps/epics/P1-EPIC-11.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+- Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+- Migrations added: none; no cloud or endpoint schema change was required.
+- Contracts updated: none; existing provisioning, gateway, command, health and local diagnostics contracts were reused without public API changes.
+- Documentation updated: cloud README, endpoint README, P1-EPIC-11 record, Engineering Backlog and changelog.
+- Known limitations: no deployed centralized log sink, production alert notification channel, browser framework, unrestricted support tool, infrastructure resource or new public API route is introduced by this Epic.
+- Recovery or rollback notes: revert the P1-EPIC-11 commit to remove logging, diagnostic bundle, alert and security-test changes; no database rollback is required.
+- Referenced ADRs: ADR-001, ADR-002, ADR-004, ADR-005, ADR-008, ADR-011, ADR-015, ADR-019, ADR-021, ADR-022, ADR-023, ADR-026 and ADR-028.
 
 ## Decision checkpoints before implementation
 

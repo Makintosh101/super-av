@@ -55,3 +55,11 @@ Completed P1-EPIC-09 endpoint adapter scope. Added the internal adapter contract
 - Preserved server-side role/company checks, logical capability labels, constrained support actions and sanitized event display.
 - Added unit coverage for all P1-EPIC-10 tasks.
 - Migrations: none. Contracts: none. Infrastructure: none.
+
+## P1-EPIC-11 — Monitoring, Diagnostics, Support and Security Hardening
+
+- Added cloud and endpoint structured logging helpers with UTC timestamps, correlation context, actor/device or command context, explicit error codes and sensitive-field redaction.
+- Added endpoint diagnostic bundle export with redacted logs, configuration summary, versions, recent health, recent commands and environment summary.
+- Added gateway offline and low-disk alert records surfaced through diagnostics/event-log state.
+- Added Phase 1 security regression coverage for user/device authentication separation, tenant ownership checks, command allow-list rejection, localhost local API exposure and certificate revocation/rotation.
+- Migrations: none. Contracts: none. Infrastructure: none.

@@ -36,7 +36,7 @@ test('tracks heartbeat presence and broadcasts offline transition after stale he
   current = new Date('2026-07-15T00:00:45Z');
   service.evaluatePresence();
   assert.equal(service._state.devices.get(device.deviceId).presence.status, 'offline');
-  assert.equal(service._state.browserBroadcasts.at(-1).type, 'device.presenceChanged');
+  assert.ok(service._state.browserBroadcasts.some((broadcast) => broadcast.type === 'device.presenceChanged'));
 });
 
 test('represents browser room sessions with one active controller and admin takeover', () => {
@@ -89,4 +89,39 @@ test('ingests health events with retention metadata and validates severity', () 
   assert.equal(health.status, 'degraded');
   assert.equal(health.retention.detailedTelemetryDays, 30);
   assert.throws(() => service.ingestHealth(welcome.connectionId, { type: 'device.healthChanged', messageId: 'msg-health-bad', deviceId: device.deviceId, status: 'degraded', issues: [{ code: 'BAD', severity: 'Notice', firstObservedAt: '2026-07-15T00:00:00Z' }] }), (error) => error.code === 'HEALTH-7002');
+});
+
+test('raises offline and low disk alerts visible to screens and event log', () => {
+  let current = new Date('2026-07-15T00:00:00Z');
+  const service = createGatewayService({ now: () => current, heartbeatIntervalSeconds: 20, lowDiskThresholdBytes: 1000 });
+  service.registerAssignedDevice(device);
+  const welcome = service.connectDevice({ scheme: 'wss', credentialThumbprint: 'thumb-001', hello });
+  service.ingestHealth(welcome.connectionId, { type: 'device.healthChanged', messageId: 'msg-health-disk', deviceId: device.deviceId, status: 'degraded', metrics: { diskFreeBytes: 999 }, issues: [] });
+  assert.equal(service._state.alerts.at(-1).alertType, 'device.disk_low');
+  current = new Date('2026-07-15T00:00:45Z');
+  service.evaluatePresence();
+  assert.equal(service._state.alerts.at(-1).alertType, 'device.offline');
+  assert.equal(service._state.browserBroadcasts.at(-1).type, 'device.alertRaised');
+});
+
+test('security checks separate user and device authentication and reject disallowed commands', () => {
+  const { service } = connectedService();
+  assert.throws(() => service.connectDevice({ scheme: 'wss', credentialThumbprint: 'thumb-001', hello: { ...hello, deviceId: 'user-1' } }), (error) => error.code === 'AUTH-3001');
+  assert.throws(() => service.subscribeBrowser({ roomId: 'demo-room', auth: { deviceId: device.deviceId, companyId: device.companyId, role: 'device' } }), (error) => error.code === 'AUTH-3001');
+  const session = service.subscribeBrowser({ roomId: 'demo-room', auth: admin });
+  service.takeControl(session.sessionId);
+  for (const action of ['shell.exec', 'powershell.run', 'file.write', 'process.launch', '/project1/base2/switch1/index']) {
+    assert.throws(() => service.createCommand({ roomId: 'demo-room', auth: admin, action, expiresAt: '2026-07-15T00:01:00Z', idempotencyKey: `idem-${action}` }), (error) => error.code === 'COMMAND-5001');
+  }
+});
+
+test('revoked devices cannot reconnect and certificate rotation preserves ownership', () => {
+  const service = createGatewayService({ now: () => new Date('2026-07-15T00:00:00Z') });
+  service.registerAssignedDevice({ ...device, credentialThumbprint: 'thumb-old' });
+  service._state.devices.get(device.deviceId).credentialThumbprint = 'thumb-new';
+  assert.throws(() => service.connectDevice({ scheme: 'wss', credentialThumbprint: 'thumb-old', hello }), (error) => error.code === 'AUTH-3001');
+  const welcome = service.connectDevice({ scheme: 'wss', credentialThumbprint: 'thumb-new', hello });
+  assert.equal(welcome.type, 'server.welcome');
+  service._state.devices.get(device.deviceId).revoked = true;
+  assert.throws(() => service.connectDevice({ scheme: 'wss', credentialThumbprint: 'thumb-new', hello }), (error) => error.code === 'AUTH-3001');
 });
