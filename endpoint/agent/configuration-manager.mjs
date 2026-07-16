@@ -18,9 +18,9 @@ export class ConfigurationManager {
 
   async downloadValidateAndActivate() {
     const desired = await this.fetchDesiredConfiguration();
-    await this.validate(desired);
     this.state.desiredRevision = desired.configurationRevision;
     try {
+      await this.validate(desired);
       this.state.active = { ...desired, activatedAt: this.now().toISOString(), capabilities: desired.capabilities ?? PHASE_1_ACTIONS };
       this.state.failedRevision = null;
       await this.persist();
