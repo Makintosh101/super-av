@@ -839,6 +839,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0901 — Build admin unclaimed-device queue
 
+**Status:** Complete — P1-EPIC-10
+
 **Relevant ADRs:** ADR-011, ADR-026, ADR-028  
 **Dependencies:** P1-BE-0301, P1-BE-0302
 
@@ -849,6 +851,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Duplicate pending registrations are presented clearly.
 
 ### P1-BE-0902 — Build pairing claim flow
+
+**Status:** Complete — P1-EPIC-10
 
 **Relevant ADRs:** ADR-002, ADR-011, ADR-026  
 **Dependencies:** P1-BE-0304, P1-BE-0901
@@ -862,6 +866,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0903 — Build room assignment screen
 
+**Status:** Complete — P1-EPIC-10
+
 **Relevant ADRs:** ADR-008, ADR-011, ADR-026, ADR-028  
 **Dependencies:** P1-BE-0306, P1-BE-0902
 
@@ -872,6 +878,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Removing or changing assignment does not delete room.
 
 ### P1-BE-0904 — Build device detail and diagnostics screen
+
+**Status:** Complete — P1-EPIC-10
 
 **Relevant ADRs:** ADR-021, ADR-022, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0402, P1-BE-0407, P1-BE-0706
@@ -884,6 +892,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 
 ### P1-BE-0905 — Build basic room control page
 
+**Status:** Complete — P1-EPIC-10
+
 **Relevant ADRs:** ADR-008, ADR-012, ADR-013, ADR-014, ADR-026  
 **Dependencies:** P1-BE-0403, P1-BE-0404, P1-BE-0406
 
@@ -894,6 +904,8 @@ The backlog must not be used to introduce architecture beyond documented decisio
 - Unauthorized controls are hidden or disabled based on server-side authorisation.
 
 ### P1-BE-0906 — Build event log view
+
+**Status:** Complete — P1-EPIC-10
 
 **Relevant ADRs:** ADR-019, ADR-021, ADR-022, ADR-023, ADR-026  
 **Dependencies:** P1-BE-0204, P1-BE-0407
@@ -1220,3 +1232,36 @@ Each completed task must record:
 - Known limitations: packaging, installer, package validation, web screens and hardware acceptance remain later authorised Epic scope.
 - Recovery or rollback notes: revert the P1-EPIC-09 commit; no database rollback is required.
 - Referenced ADRs: ADR-002, ADR-008, ADR-015, ADR-016, ADR-017, ADR-021, ADR-022, ADR-024, ADR-025, ADR-026, ADR-027 and ADR-032.
+
+## P1-EPIC-10 completion evidence
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-0901 — Build admin unclaimed-device queue.
+- P1-BE-0902 — Build pairing claim flow.
+- P1-BE-0903 — Build room assignment screen.
+- P1-BE-0904 — Build device detail and diagnostics screen.
+- P1-BE-0905 — Build basic room control page.
+- P1-BE-0906 — Build event log view.
+
+Changed behaviour: the cloud implementation now includes framework-neutral Phase 1 web application screen view models for the admin unclaimed-device queue, pairing claim flow, room assignment, device diagnostics, room controls and event log. The screens enforce server-side role and company checks, expose only logical capability labels, preserve explicit pairing and authorization errors, constrain support actions, and sanitise event-log details before display.
+
+Files changed: `cloud/web-app-screens.mjs`, `cloud/provisioning/provisioning-service.mjs`, `tests/web-app-screens.test.mjs`, `cloud/README.md`, `docs/roadmaps/epics/P1-EPIC-10.md`, `docs/tasks/PHASE_1_ENGINEERING_BACKLOG.md` and `docs/CHANGELOG.md`.
+
+Tests and checks: `npm test` passed, including documentation, contract, database and unit-test validation. `git diff --check` passed.
+
+Migrations: none; no database schema change was required.
+
+Contracts: none; existing provisioning, gateway, configuration and message contracts were reused without public API changes.
+
+Documentation: cloud README, P1-EPIC-10 record, Engineering Backlog and changelog were updated.
+
+Known limitations: no deployed browser framework, HTTP route, infrastructure module, packaged installer or monitoring hardening is introduced by this Epic; those remain later authorised scope.
+
+Recovery/rollback: revert the P1-EPIC-10 commit to remove screen view models and tests; no database rollback is required.
+
+Referenced ADRs: ADR-002, ADR-008, ADR-011, ADR-012, ADR-013, ADR-014, ADR-019, ADR-021, ADR-022, ADR-023, ADR-026 and ADR-028.
+
+Review Gate: reached; do not begin P1-EPIC-11 until P1-EPIC-10 Review Gate approval is complete.

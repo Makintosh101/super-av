@@ -49,3 +49,9 @@ Completed P1-EPIC-08 local endpoint execution scope. Added command dispatch and 
 ## 2026-07-15 — P1-EPIC-09 Adapter Host, Simulator and TouchDesigner Adapter
 
 Completed P1-EPIC-09 endpoint adapter scope. Added the internal adapter contract, adapter host lifecycle, System Health adapter, deterministic simulated TouchDesigner adapter, TouchDesigner process/localhost bridge boundary, logical command handlers, heartbeat detection and bounded restart policy. Added unit coverage for adapter contract enforcement, degraded startup diagnostics, health reporting, simulator state changes, localhost/protocol/message validation, TouchDesigner command mapping and restart-limit degradation. No public API, cloud contract, database migration or infrastructure change was required.
+## P1-EPIC-10 — Phase 1 Web Application Screens
+
+- Added framework-neutral Phase 1 web application screen view models for unclaimed-device queue, pairing claim, room assignment, device diagnostics, room controls and event log.
+- Preserved server-side role/company checks, logical capability labels, constrained support actions and sanitized event display.
+- Added unit coverage for all P1-EPIC-10 tasks.
+- Migrations: none. Contracts: none. Infrastructure: none.
