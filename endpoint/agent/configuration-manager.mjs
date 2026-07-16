@@ -21,6 +21,7 @@ export class ConfigurationManager {
     this.state.desiredRevision = desired.configurationRevision;
     try {
       await this.validate(desired);
+<<<<<<< HEAD
     } catch (error) {
       this.state.failedRevision = desired.configurationRevision ?? null;
       await this.persist();
@@ -28,6 +29,8 @@ export class ConfigurationManager {
       throw error;
     }
     try {
+=======
+>>>>>>> origin/main
       this.state.active = { ...desired, activatedAt: this.now().toISOString(), capabilities: desired.capabilities ?? PHASE_1_ACTIONS };
       this.state.failedRevision = null;
       await this.persist();

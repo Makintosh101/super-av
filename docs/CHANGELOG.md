@@ -1,5 +1,12 @@
 # Documentation Changelog
 
+## P1-EPIC-13 — End-to-End Acceptance, Resilience and Operational Readiness
+
+- Added aggregate Phase 1 acceptance and resilience coverage for clean rebuild, simulator lifecycle, Windows endpoint installation evidence, TouchDesigner abstraction, network loss/roaming, offline reboot recovery, configuration rollback and package validation rollback.
+- Added the Phase 1 demonstration script with expected evidence, known limitations and recovery notes.
+- No migrations, public API changes, WebSocket contract changes or infrastructure changes were required.
+- Validation: `npm test` and `git diff --check` passed.
+
 
 ## P1-EPIC-12 — Packaging, Deployment, Infrastructure and Package Validation
 

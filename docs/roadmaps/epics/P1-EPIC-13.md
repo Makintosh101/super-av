@@ -84,6 +84,7 @@ flowchart TD
 - Deliverables remain inside Phase 1 and do not create new architecture.
 - Completion evidence covers behaviour, files, tests, migrations, contracts, documentation, limitations, rollback notes and ADRs.
 
+<<<<<<< HEAD
 
 ## Completion evidence
 
@@ -95,3 +96,30 @@ flowchart TD
 - Infrastructure: none changed; tests validate existing code-owned Phase 1 infrastructure definition.
 - Known limitations: live cloud provisioning and real Windows VM execution remain external environment validation activities; repository tests preserve deterministic acceptance evidence without adding new architecture.
 - Review Gate: reached; do not begin any following Epic from this task.
+=======
+## Completion record
+
+Status: Complete pending Review Gate approval.
+
+Completed tasks:
+
+- P1-BE-1301 — Create clean-environment rebuild test.
+- P1-BE-1302 — Create simulator end-to-end lifecycle test.
+- P1-BE-1303 — Create Windows endpoint installation acceptance test.
+- P1-BE-1304 — Create TouchDesigner hardware-path abstraction test.
+- P1-BE-1305 — Create network loss and roaming resilience test.
+- P1-BE-1306 — Create reboot while offline recovery test.
+- P1-BE-1307 — Create configuration failure rollback test.
+- P1-BE-1308 — Create update package validation and rollback test.
+- P1-BE-1309 — Create Phase 1 demonstration script.
+
+Changed behaviour: the repository now includes aggregate end-to-end acceptance and resilience tests plus the Phase 1 demonstration script.
+
+Tests and checks: `npm test` passed. `git diff --check` passed.
+
+Migrations: none; no database schema change was required.
+
+Contracts: none; existing contracts were reused without public API or WebSocket changes.
+
+Review Gate: reached; do not begin any following Epic or future-phase work until P1-EPIC-13 Review Gate approval is complete.
+>>>>>>> origin/main
