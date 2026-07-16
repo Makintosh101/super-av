@@ -25,3 +25,7 @@ npm run check:docs
 - [Phase 1 Build Plan](../docs/10_PHASE_1_BUILD_PLAN.md)
 - [Endpoint Agent Specification](../docs/specifications/04_ENDPOINT_AGENT_SPECIFICATION.md)
 - [API and Message Contracts](../docs/specifications/06_API_AND_MESSAGE_CONTRACTS.md)
+
+## P1-EPIC-12 project package manifest
+
+`touchdesigner/packages/phase1-project-manifest.mjs` defines the TouchDesigner project package manifest. The manifest records project version, package hash, signature metadata, required TouchDesigner version and asset references. TouchDesigner licensing remains a deployment prerequisite and is not embedded in runtime logic.

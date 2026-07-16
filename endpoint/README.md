@@ -94,3 +94,9 @@ The TouchDesigner restart policy is an explicit recovery mode: when the project 
 `endpoint/agent/diagnostic-bundle.mjs` exports a Phase 1 diagnostic bundle as a local JSON artifact. The bundle includes logs, local configuration summary, versions, recent health, recent commands and environment summary. The exporter redacts sensitive fields such as private keys, tokens, passwords, secrets and signed/protected URLs before writing the bundle.
 
 Diagnostic bundle export is available as local implementation logic and through the constrained local diagnostics export trigger. It does not add remote shell, arbitrary file access, a new inbound network binding or a deployed upload service.
+
+## P1-EPIC-12 installer and package validation
+
+`endpoint/packaging/installer-manifest.mjs` defines the Phase 1 endpoint installer manifest. It records the Windows service entry point, auto-start registration, required writable directories, adapter package reference, local commissioning access point and installed-version metadata path. The manifest explicitly rejects embedded long-lived shared fleet secrets.
+
+`endpoint/agent/package-validator.mjs` verifies package SHA-256 hashes and RSA-SHA256 signatures before activation. Activation keeps the current package and moves the previous package into a rollback directory so recovery can restore the last known-good package without hiding the failed update.

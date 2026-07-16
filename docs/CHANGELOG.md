@@ -1,5 +1,13 @@
 # Documentation Changelog
 
+
+## P1-EPIC-12 — Packaging, Deployment, Infrastructure and Package Validation
+
+- Added Phase 1 Blue Elephant infrastructure module skeleton and environment configuration contract.
+- Added endpoint installer manifest, TouchDesigner package manifest and endpoint package hash/signature validation with rollback package preservation.
+- Added release and rollback operating documentation.
+- Validation: `npm test` and `git diff --check` passed.
+
 ## 2026-07-15 — Revision 7
 
 Completed Epic 3 cloud database migration foundation. Added ordered PostgreSQL migrations, idempotent Blue Elephant seed data, `check:db` validation and database recovery documentation while preserving the Epic 2 contract validation baseline.
